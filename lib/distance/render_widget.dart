@@ -31,7 +31,6 @@ class DistanceRenderWidget extends LeafRenderObjectWidget {
         this.touchEntry,
         this.topOverlap,
         this.distance,
-        //this.favorites,
       })
       : super(key: key);
 
@@ -82,7 +81,6 @@ class DistanceRenderObject extends RenderBox {
   MenuItemData _focusItem;
   MenuItemData _processedFocusItem;
   List<TapTarget> _tapTargets = [];
-  //List<DistanceEntry> _favorites;
   TouchBubbleCallback touchBubble;
   TouchEntryCallback touchEntry;
 
@@ -91,7 +89,6 @@ class DistanceRenderObject extends RenderBox {
 
   double get topOverlap => _topOverlap;
   Distance get distance => _distance;
-  //List<DistanceEntry> get favorites => _favorites;
   MenuItemData get focusItem => _focusItem;
 
   set topOverlap(double value) {
@@ -114,15 +111,6 @@ class DistanceRenderObject extends RenderBox {
     markNeedsPaint();
     markNeedsLayout();
   }
-
-/*  set favorites(List<DistanceEntry> value) {
-    if (_favorites == value) {
-      return;
-    }
-    _favorites = value;
-    markNeedsPaint();
-    markNeedsLayout();
-  }*/
 
   set focusItem(MenuItemData value) {
     if (_focusItem == value) {
@@ -449,7 +437,7 @@ class DistanceRenderObject extends RenderBox {
       NumberFormat formatter = NumberFormat.compact();
       String pagesFormatted = formatter.format(pages.abs());
       String until = DistanceEntry.formatYears(timeUntil).toLowerCase() +
-          " ago\n($pagesFormatted page scrolls)";
+          "\n($pagesFormatted page scrolls)";
       builder.addText(until);
       labelParagraph = builder.build();
       labelParagraph.layout(ui.ParagraphConstraints(width: size.width));

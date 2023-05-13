@@ -68,9 +68,6 @@ class DistanceEntry {
   double labelY = 0.0;
   double labelVelocity = 0.0;
 
-  //double favoriteY = 0.0;
-  //bool isFavoriteOccluded = false;
-
   DistanceAsset asset;
 
   bool get isVisible {
@@ -100,7 +97,7 @@ class DistanceEntry {
     if (start > 0) {
       return start.round().toString();
     }
-    return DistanceEntry.formatYears(start) + " Ago";
+    return DistanceEntry.formatYears(start);
   }
 
   /// Debug information.
@@ -133,6 +130,6 @@ class DistanceEntry {
     } else {
       label = valueAbs.toStringAsFixed(0);
     }
-    return label + " Years";
+    return label + " decimetres";
   }
 }

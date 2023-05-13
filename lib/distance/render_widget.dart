@@ -1,10 +1,7 @@
-import 'dart:math';
-import 'dart:ui';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../menu/menu_data.dart';
 import 'distance.dart';
 import 'entry.dart';

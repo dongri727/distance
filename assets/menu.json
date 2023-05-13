@@ -1,24 +1,19 @@
 [
   {
-    "label": "Deep Space",
+    "label": "Billion Years",
     "background": "#083158",
     "color": "#ffffff",
     "items":
     [
       {
-        "start": -2000000000,
-        "end": -100000000,
-        "label": "James Webb Space Telescope"
-      },
-      {
-        "start": -2000000000,
-        "end": -100000000,
-        "label": "Moon"
+        "start": -15000000000,
+        "end": -1000000000,
+        "label": "Big Bang"
       }
     ]
   },
   {
-    "label": "Space",
+    "label": "Million Years",
     "background": "#fdfdfd",
     "color": "#000000",
     "items":

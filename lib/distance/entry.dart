@@ -39,7 +39,6 @@ class DistanceEntry {
   ///
   String _label;
   String id;
-
   Color accent;
 
   /// Each entry constitues an element of a tree:

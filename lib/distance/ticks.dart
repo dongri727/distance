@@ -3,7 +3,6 @@ import 'package:distance/distance/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
-
 import 'distance.dart';
 
 /// This class is used by the [DistanceRenderWidget] to render the ticks on the left side of the screen.

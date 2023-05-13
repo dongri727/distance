@@ -17,11 +17,7 @@ class BlocProvider extends InheritedWidget {
       : distance = t ?? Distance(platform),
         super(key: key, child: child) {
     distance
-        .loadFromBundle(
-        "assets/height_depth.json"
-      // "assets/distance.json",
-
-    )
+        .loadFromBundle("assets/distance.json")
         .then((List<DistanceEntry> entries) {
       distance.setViewport(
           start: entries.first.start * 2.0,

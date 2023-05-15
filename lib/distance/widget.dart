@@ -23,8 +23,8 @@ class DistanceWidget extends StatefulWidget {
 }
 
 class _DistanceWidgetState extends State<DistanceWidget> {
-  static const String DefaultPositionName = "Deep Space";
-  static const double TopOverlap = 56.0;
+  static const String defaultPositionName = "Deep Space";
+  static const double topOverlap = 56.0;
 
   /// These variables are used to calculate the correct viewport for the distance
   /// when performing a scaling operation as in [_scaleStart], [_scaleUpdate], [_scaleEnd].
@@ -111,7 +111,7 @@ class _DistanceWidgetState extends State<DistanceWidget> {
         MenuItemData target = MenuItemData.fromEntry(_touchedBubble.entry);
 
         distance.padding = EdgeInsets.only(
-            top: TopOverlap +
+            top: topOverlap +
                 devicePadding.top +
                 target.padTop +
                 Distance.Parallax,
@@ -132,7 +132,7 @@ class _DistanceWidgetState extends State<DistanceWidget> {
       MenuItemData target = MenuItemData.fromEntry(_touchedBubble.entry);
 
       distance.padding = EdgeInsets.only(
-          top: TopOverlap +
+          top: topOverlap +
               devicePadding.top +
               target.padTop +
               Distance.Parallax,
@@ -149,7 +149,7 @@ class _DistanceWidgetState extends State<DistanceWidget> {
       widget.distance.isActive = true;
       _positionName = distance.currentPosition != null
           ? distance.currentPosition.label
-          : DefaultPositionName;
+          : defaultPositionName;
       distance.onHeaderColorsChanged = (Color background, Color text) {
         setState(() {
           _headerTextColor = text;
@@ -160,7 +160,7 @@ class _DistanceWidgetState extends State<DistanceWidget> {
       /// Update the label for the [Distance] object.
       distance.onPositionChanged = (DistanceEntry entry) {
         setState(() {
-          _positionName = entry != null ? entry.label : DefaultPositionName;
+          _positionName = entry != null ? entry.label : defaultPositionName;
         });
       };
 
@@ -188,12 +188,12 @@ class _DistanceWidgetState extends State<DistanceWidget> {
       };
       distance.onPositionChanged = (DistanceEntry entry) {
         setState(() {
-          _positionName = entry != null ? entry.label : DefaultPositionName;
+          _positionName = entry != null ? entry.label : defaultPositionName;
         });
       };
       setState(() {
         _positionName =
-        distance.currentPosition != null ? distance.currentPosition : DefaultPositionName;
+        distance.currentPosition != null ? distance.currentPosition : defaultPositionName;
       });
     }
   }
@@ -233,7 +233,7 @@ class _DistanceWidgetState extends State<DistanceWidget> {
           child: Stack(children: <Widget>[
             DistanceRenderWidget(
                 distance: distance,
-                topOverlap: TopOverlap + devicePadding.top,
+                topOverlap: topOverlap + devicePadding.top,
                 focusItem: widget.focusItem,
                 touchBubble: onTouchBubble,
                 touchEntry: onTouchEntry

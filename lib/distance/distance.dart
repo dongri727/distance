@@ -7,9 +7,9 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'entry.dart';
 import 'utils.dart';
 
-typedef PaintCallback();
-typedef ChangePositionCallback(DistanceEntry position);
-typedef ChangeHeaderColorCallback(Color background, Color text);
+typedef PaintCallback = Function();
+typedef ChangePositionCallback = Function(DistanceEntry position);
+typedef ChangeHeaderColorCallback = Function(Color background, Color text);
 
 class Distance {
   /// Some aptly named constants for properly aligning the Distance view.

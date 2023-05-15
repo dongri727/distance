@@ -2,7 +2,7 @@
   {
     "label": "Deep Space",
     "background": "#9acd32",
-    "color": "#000000",
+    "color": "#2f4f4f",
     "items":
     [
       {
@@ -18,9 +18,9 @@
     ]
   },
   {
-    "label": "Near Earth",
+    "label": "Near Earth Space",
     "background": "#9acd32",
-    "color": "#000000",
+    "color": "#2f4f4f",
     "items":
     [
       {
@@ -36,9 +36,9 @@
     ]
   },
   {
-    "label": "Atomosphere",
+    "label": "Atmosphere",
     "background": "#9acd32",
-    "color": "#000000",
+    "color": "#2f4f4f",
     "items":
     [
       {
@@ -51,7 +51,7 @@
   {
     "label": "Earth",
     "background": "#9acd32",
-    "color": "#000000",
+    "color": "#2f4f4f",
     "items":
     [
       {

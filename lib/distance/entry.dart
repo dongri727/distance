@@ -23,7 +23,6 @@ class DistanceImage extends DistanceAsset {
 }
 
 /// A label for [DistanceEntry].
-//enum DistanceEntryType { Era, Incident }
 enum DistanceEntryType { position, material }
 
 /// Each entry in the distance is represented by an instance of this object.
@@ -37,19 +36,17 @@ class DistanceEntry {
   /// Used to calculate how many lines to draw for the bubble in the distance.
   int lineCount = 1;
 
-  ///
   String _label;
-  //String id;
   Color accent;
 
   /// Each entry constitues an element of a tree:
-  /// eras are grouped into spanning eras and events are placed into the eras they belong to.
+  /// positions are grouped into spanning positions and events are placed into the positions they belong to.
   DistanceEntry parent;
   List<DistanceEntry> children;
 
-  /// All the distance entries are also linked together to easily access the next/previous event.
+  /// All the distance entries are also linked together to easily access the next/previous element.
   /// After a couple of seconds of inactivity on the distance, a previous/next entry button will appear
-  /// to allow the user to navigate faster between adjacent events.
+  /// to allow the user to navigate faster between adjacent element.
   DistanceEntry next;
   DistanceEntry previous;
 
@@ -114,23 +111,20 @@ class DistanceEntry {
     if (valueAbs > 1000000000) {
       double v = (valueAbs / 100000000.0).floorToDouble() / 10.0;
 
-      label = (valueAbs / 1000000000)
-          .toStringAsFixed(v == v.floorToDouble() ? 0 : 1) +
-          " Billion";
+      label = "${(valueAbs / 1000000000)
+          .toStringAsFixed(v == v.floorToDouble() ? 0 : 1)} Billion";
     } else if (valueAbs > 1000000) {
       double v = (valueAbs / 100000.0).floorToDouble() / 10.0;
       label =
-          (valueAbs / 1000000).toStringAsFixed(v == v.floorToDouble() ? 0 : 1) +
-              " Million";
+          "${(valueAbs / 1000000).toStringAsFixed(v == v.floorToDouble() ? 0 : 1)} Million";
     } else if (valueAbs > 10000) // N.B. < 10,000
         {
       double v = (valueAbs / 100.0).floorToDouble() / 10.0;
       label =
-          (valueAbs / 1000).toStringAsFixed(v == v.floorToDouble() ? 0 : 1) +
-              " Thousand";
+          "${(valueAbs / 1000).toStringAsFixed(v == v.floorToDouble() ? 0 : 1)} Thousand";
     } else {
       label = valueAbs.toStringAsFixed(0);
     }
-    return label + " decimetres";
+    return "$label decimetres";
   }
 }

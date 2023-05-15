@@ -6,11 +6,11 @@ import 'package:intl/intl.dart';
 import 'distance.dart';
 
 /// This class is used by the [DistanceRenderWidget] to render the ticks on the left side of the screen.
-///
 /// It has a single [paint()] method that's called within [DistanceRenderObject.paint()].
 class Ticks {
   /// The following `const` variables are used to properly align, pad and layout the ticks
   /// on the left side of the distance.
+  /// lowerCamelに直すと、別変数と被る
   static const double Margin = 20.0;
   static const double Width = 40.0;
   static const double LabelPadLeft = 5.0;
@@ -72,7 +72,8 @@ class Ticks {
     /// depending on the current era. The [TickColors] object, in `distance_utils.dart`,
     /// wraps this information.
     List<TickColors> tickColors = distance.tickColors;
-    if (tickColors != null && tickColors.length > 0) {
+    //if (tickColors != null && tickColors.length > 0) {
+    if (tickColors != null && tickColors.isNotEmpty) {
       /// Build up the color stops for the linear gradient.
       double rangeStart = tickColors.first.start;
       double range = tickColors.last.start - tickColors.first.start;
@@ -114,7 +115,7 @@ class Ticks {
           Rect.fromLTWH(offset.dx, y1, gutterWidth, y2 - y1), paint);
     } else {
       canvas.drawRect(Rect.fromLTWH(offset.dx, offset.dy, gutterWidth, height),
-          Paint()..color = Color.fromRGBO(246, 246, 246, 0.95));
+          Paint()..color = const Color.fromRGBO(246, 246, 246, 0.95));
     }
 
     Set<String> usedValues = Set<String>();
@@ -136,7 +137,7 @@ class Ticks {
 
         /// Drawing text to [canvas] is done by using the [ParagraphBuilder] directly.
         ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
-            textAlign: TextAlign.end, fontFamily: "Roboto", fontSize: 10.0))
+            textAlign: TextAlign.end,/* fontFamily: "Roboto", */fontSize: 10.0))
           ..pushStyle(ui.TextStyle(color: colors.text));
 
         int value = tt.round().abs();

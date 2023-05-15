@@ -34,9 +34,14 @@
     }
   },
   {
+    "start": -7000000,
+    "end": -900000,
+    "label": "Near Earth Space",
+    "accent": [255, 125, 195, 184]
+  },
+  {
     "point": -6000000,
     "label": "Hubble Space Telescope"
-
   },
   {
     "point": -4180000,

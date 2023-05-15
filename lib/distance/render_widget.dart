@@ -67,7 +67,7 @@ class DistanceRenderWidget extends LeafRenderObjectWidget {
 /// The core method of this object is [paint()]: this is where all the elements
 /// are actually drawn to screen.
 class DistanceRenderObject extends RenderBox {
-  static const List<Color> LineColors = [
+  static const List<Color> lineColors = [
     Color.fromARGB(255, 125, 195, 184),
     Color.fromARGB(255, 190, 224, 146),
     Color.fromARGB(255, 238, 155, 75),
@@ -478,13 +478,13 @@ class DistanceRenderObject extends RenderBox {
           Paint()
             ..color = (item.accent != null
                 ? item.accent
-                : LineColors[depth % LineColors.length])
+                : lineColors[depth % lineColors.length])
                 .withOpacity(item.opacity));
       if (legOpacity > 0.0) {
         Paint legPaint = Paint()
           ..color = (item.accent != null
               ? item.accent
-              : LineColors[depth % LineColors.length])
+              : lineColors[depth % lineColors.length])
               .withOpacity(legOpacity);
 
         /// Draw the line connecting the start&point of this item on the distance.
@@ -531,7 +531,7 @@ class DistanceRenderObject extends RenderBox {
           Paint()
             ..color = (item.accent != null
                 ? item.accent
-                : LineColors[depth % LineColors.length])
+                : lineColors[depth % lineColors.length])
                 .withOpacity(item.opacity * item.labelOpacity));
       canvas
           .clipRect(Rect.fromLTWH(BubblePadding, 0.0, textWidth, bubbleHeight));

@@ -13,7 +13,7 @@ class DistanceAsset {
   double scaleVelocity = 0.0;
   double y = 0.0;
   double velocity = 0.0;
-  String filename;
+  //String filename;
   DistanceEntry entry;
 }
 
@@ -39,7 +39,7 @@ class DistanceEntry {
 
   ///
   String _label;
-  String id;
+  //String id;
   Color accent;
 
   /// Each entry constitues an element of a tree:
@@ -63,13 +63,13 @@ class DistanceEntry {
   double labelOpacity = 0.0;
   double targetLabelOpacity = 0.0;
   double delayLabel = 0.0;
-  double targetAssetOpacity = 0.0;
-  double delayAsset = 0.0;
+  //double targetAssetOpacity = 0.0;
+  //double delayAsset = 0.0;
   double legOpacity = 0.0;
   double labelY = 0.0;
   double labelVelocity = 0.0;
 
-  DistanceAsset asset;
+  //DistanceAsset asset;
 
   bool get isVisible {
     return opacity > 0.0;
@@ -93,12 +93,12 @@ class DistanceEntry {
     }
   }
 
-  /// Pretty-printing for the entry date.
-  String formatYearsAgo() {
+  /// Pretty-printing for the entry position.
+  String formatFarAway() {
     if (start > 0) {
       return start.round().toString();
     }
-    return DistanceEntry.formatYears(start);
+    return DistanceEntry.formatDistance(start);
   }
 
   /// Debug information.
@@ -108,7 +108,7 @@ class DistanceEntry {
   }
 
   /// Helper method.
-  static String formatYears(double start) {
+  static String formatDistance(double start) {
     String label;
     int valueAbs = start.round().abs();
     if (valueAbs > 1000000000) {

@@ -24,7 +24,7 @@ class DistanceRenderWidget extends LeafRenderObjectWidget {
   final TouchBubbleCallback touchBubble;
   final TouchEntryCallback touchEntry;
 
-  DistanceRenderWidget(
+  const DistanceRenderWidget(
       {Key key,
         this.focusItem,
         this.touchBubble,
@@ -355,7 +355,7 @@ class DistanceRenderObject extends RenderBox {
       NumberFormat formatter = NumberFormat.compact();
       String pagesFormatted = formatter.format(pages);
       String until = "in " +
-          DistanceEntry.formatYears(timeUntil).toLowerCase() +
+          DistanceEntry.formatDistance(timeUntil).toLowerCase() +
           "\n($pagesFormatted page scrolls)";
       builder.addText(until);
       labelParagraph = builder.build();
@@ -436,7 +436,7 @@ class DistanceRenderObject extends RenderBox {
       double pages = timeUntil / pageSize;
       NumberFormat formatter = NumberFormat.compact();
       String pagesFormatted = formatter.format(pages.abs());
-      String until = DistanceEntry.formatYears(timeUntil).toLowerCase() +
+      String until = DistanceEntry.formatDistance(timeUntil).toLowerCase() +
           "\n($pagesFormatted page scrolls)";
       builder.addText(until);
       labelParagraph = builder.build();

@@ -10,7 +10,7 @@ import 'entry.dart';
 import 'utils.dart';
 
 typedef PaintCallback();
-typedef ChangeEraCallback(DistanceEntry era);
+typedef ChangePositionCallback(DistanceEntry position);
 typedef ChangeHeaderColorCallback(Color background, Color text);
 
 class Distance {
@@ -93,8 +93,8 @@ class Distance {
 
   /// Through these two references, the Distance can access the era and update
   /// the top label accordingly.
-  DistanceEntry _currentEra;
-  DistanceEntry _lastEra;
+  DistanceEntry _currentPosition;
+  DistanceEntry _lastPosition;
 
   /// These references allow to maintain a reference to the next and previous elements
   /// of the Distance, depending on which elements are currently in focus.
@@ -105,7 +105,7 @@ class Distance {
   DistanceEntry _prevEntry;
   DistanceEntry _renderPrevEntry;
 
-  /// A gradient is shown on the background, depending on the [_currentEra] we're in.
+  /// A gradient is shown on the background, depending on the [_currentPosition] we're in.
   List<DistanceBackgroundColor> _backgroundColors;
 
   /// [Ticks] also have custom colors so that they are always visible with the changing background.
@@ -126,7 +126,7 @@ class Distance {
 
   /// These next two callbacks are bound to set the state of the [DistanceWidget]
   /// so it can change the appearance of the top AppBar.
-  ChangeEraCallback onEraChanged;
+  ChangePositionCallback onPositionChanged;
   ChangeHeaderColorCallback onHeaderColorsChanged;
 
   Distance(this._platform) {
@@ -148,7 +148,7 @@ class Distance {
   Color get headerTextColor => _headerTextColor;
   Color get headerBackgroundColor => _headerBackgroundColor;
   HeaderColors get currentHeaderColors => _currentHeaderColors;
-  DistanceEntry get currentEra => _currentEra;
+  DistanceEntry get currentPosition => _currentPosition;
   DistanceEntry get nextEntry => _renderNextEntry;
   DistanceEntry get prevEntry => _renderPrevEntry;
   List<DistanceEntry> get entries => _entries;
@@ -751,7 +751,7 @@ class Distance {
     //_lastAssetY = -double.maxFinite;
     _labelX = 0.0;
     _offsetDepth = 0.0;
-    _currentEra = null;
+    _currentPosition = null;
     _nextEntry = null;
     _prevEntry = null;
     if (_entries != null) {
@@ -818,10 +818,10 @@ class Distance {
     }
 
     /// If a new era is currently in view, callback.
-    if (_currentEra != _lastEra) {
-      _lastEra = _currentEra;
-      if (onEraChanged != null) {
-        onEraChanged(_currentEra);
+    if (_currentPosition != _lastPosition) {
+      _lastPosition = _currentPosition;
+      if (onPositionChanged != null) {
+        onPositionChanged(currentPosition);
       }
     }
 
@@ -977,10 +977,10 @@ class Distance {
         _offsetDepth = depth.toDouble();
       }
 
-      /// A new era is currently in view.
+      /// A new position is currently in view.
       //if (item.type == DistanceEntryType.Era && y < 0 && endY > _height / 2.0) {
       if (item.type == DistanceEntryType.position && y < 0 && endY > _height / 2.0) {
-        _currentEra = item;
+        _currentPosition = item;
       }
 
       /// Check if the bubble is out of view and set the y position to the

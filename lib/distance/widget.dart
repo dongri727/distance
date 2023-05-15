@@ -16,14 +16,14 @@ typedef SelectItemCallback(DistanceEntry item);
 class DistanceWidget extends StatefulWidget {
   final MenuItemData focusItem;
   final Distance distance;
-  DistanceWidget(this.focusItem, this.distance, {Key key}) : super(key: key);
+  const DistanceWidget(this.focusItem, this.distance, {Key key}) : super(key: key);
 
   @override
   _DistanceWidgetState createState() => _DistanceWidgetState();
 }
 
 class _DistanceWidgetState extends State<DistanceWidget> {
-  static const String DefaultEraName = "Billion Years";
+  static const String DefaultPositionName = "Deep Space";
   static const double TopOverlap = 56.0;
 
   /// These variables are used to calculate the correct viewport for the distance
@@ -37,9 +37,9 @@ class _DistanceWidgetState extends State<DistanceWidget> {
   TapTarget _touchedBubble;
   DistanceEntry _touchedEntry;
 
-  /// Which era the Distance is currently focused on.
-  /// Defaults to [DefaultEraName].
-  String _eraName;
+  /// Which position the Distance is currently focused on.
+  /// Defaults to [DefaultPositionName].
+  String _positionName;
 
   /// Syntactic-sugar-getter.
   Distance get distance => widget.distance;
@@ -147,9 +147,9 @@ class _DistanceWidgetState extends State<DistanceWidget> {
     super.initState();
     if (distance != null) {
       widget.distance.isActive = true;
-      _eraName = distance.currentEra != null
-          ? distance.currentEra.label
-          : DefaultEraName;
+      _positionName = distance.currentPosition != null
+          ? distance.currentPosition.label
+          : DefaultPositionName;
       distance.onHeaderColorsChanged = (Color background, Color text) {
         setState(() {
           _headerTextColor = text;
@@ -158,9 +158,9 @@ class _DistanceWidgetState extends State<DistanceWidget> {
       };
 
       /// Update the label for the [Distance] object.
-      distance.onEraChanged = (DistanceEntry entry) {
+      distance.onPositionChanged = (DistanceEntry entry) {
         setState(() {
-          _eraName = entry != null ? entry.label : DefaultEraName;
+          _positionName = entry != null ? entry.label : DefaultPositionName;
         });
       };
 
@@ -186,14 +186,14 @@ class _DistanceWidgetState extends State<DistanceWidget> {
           _headerBackgroundColor = background;
         });
       };
-      distance.onEraChanged = (DistanceEntry entry) {
+      distance.onPositionChanged = (DistanceEntry entry) {
         setState(() {
-          _eraName = entry != null ? entry.label : DefaultEraName;
+          _positionName = entry != null ? entry.label : DefaultPositionName;
         });
       };
       setState(() {
-        _eraName =
-        distance.currentEra != null ? distance.currentEra : DefaultEraName;
+        _positionName =
+        distance.currentPosition != null ? distance.currentPosition : DefaultPositionName;
       });
     }
   }
@@ -205,7 +205,7 @@ class _DistanceWidgetState extends State<DistanceWidget> {
     super.deactivate();
     if (distance != null) {
       distance.onHeaderColorsChanged = null;
-      distance.onEraChanged = null;
+      distance.onPositionChanged = null;
     }
   }
 
@@ -269,7 +269,7 @@ class _DistanceWidgetState extends State<DistanceWidget> {
                               },
                             ),
                             Text(
-                              _eraName,
+                              _positionName,
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   fontFamily: "RobotoMedium",

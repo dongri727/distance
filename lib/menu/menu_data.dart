@@ -36,7 +36,8 @@ class MenuItemData {
     /// Pad the edges of the screen.
     pad = true;
 
-    if (entry.type == DistanceEntryType.Era) {
+    //if (entry.type == DistanceEntryType.Era) {
+    if (entry.type == DistanceEntryType.position) {
       start = entry.start;
       end = entry.end;
     } else {

@@ -23,7 +23,8 @@ class DistanceImage extends DistanceAsset {
 }
 
 /// A label for [DistanceEntry].
-enum DistanceEntryType { Era, Incident }
+//enum DistanceEntryType { Era, Incident }
+enum DistanceEntryType { position, material }
 
 /// Each entry in the distance is represented by an instance of this object.
 /// Each favorite, search result and detail page will grab the information from a reference

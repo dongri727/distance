@@ -56,7 +56,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget> {
     List<Widget> tail = [];
 
     tail
-      ..addAll(_menu.sections
+      .addAll(_menu.sections
           .map<Widget>((MenuSectionData section) => Container(
           margin: const EdgeInsets.only(top: 20.0),
           child: MenuSection(

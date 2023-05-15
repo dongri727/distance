@@ -225,7 +225,7 @@ class DistanceRenderObject extends RenderBox {
     double renderEnd = _distance.renderEnd;
     double scale = size.height / (renderEnd - renderStart);
 
-    if (distance.renderAssets != null) {
+/*    if (distance.renderAssets != null) {
       canvas.save();
       canvas.clipRect(offset & size);
       for (DistanceAsset asset in distance.renderAssets) {
@@ -250,7 +250,7 @@ class DistanceRenderObject extends RenderBox {
         }
       }
       canvas.restore();
-    }
+    }*/
 
     /// Paint the [Ticks] on the left side of the screen.
     canvas.save();

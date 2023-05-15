@@ -30,7 +30,7 @@ class Distance {
   //static const double BubbleArrowSize = 5.0;
   static const double BubblePadding = 10.0;
   static const double BubbleTextHeight = 20.0;
-  static const double AssetPadding = 30.0;
+  //static const double AssetPadding = 30.0;
   static const double Parallax = 100.0;
   static const double AssetScreenScale = 0.3;
   static const double InitialViewportPadding = 100.0;
@@ -57,7 +57,7 @@ class Distance {
   double _renderOffsetDepth = 0.0;
   double _labelX = 0.0;
   double _renderLabelX = 0.0;
-  double _lastAssetY = 0.0;
+  //double _lastAssetY = 0.0;
   double _prevEntryOpacity = 0.0;
   double _distanceToPrevEntry = 0.0;
   double _nextEntryOpacity = 0.0;
@@ -67,7 +67,7 @@ class Distance {
   double _timeMax = 0.0;
   double _gutterWidth = GutterLeft;
 
-  bool _showFavorites = false;
+  //bool _showFavorites = false;
   bool _isFrameScheduled = false;
   bool _isInteracting = false;
   bool _isScaling = false;
@@ -75,7 +75,6 @@ class Distance {
   bool _isSteady = false;
 
   HeaderColors _currentHeaderColors;
-
   Color _headerTextColor;
   Color _headerBackgroundColor;
 
@@ -117,16 +116,16 @@ class Distance {
   List<DistanceEntry> _entries;
 
   /// The list of [DistanceAsset], also loaded from disk at boot.
-  List<DistanceAsset> _renderAssets;
+  //List<DistanceAsset> _renderAssets;
 
-  Map<String, DistanceEntry> _entriesById = Map<String, DistanceEntry>();
+  //Map<String, DistanceEntry> _entriesById = Map<String, DistanceEntry>();
 
   /// Callback set by [DistanceRenderWidget] when adding a reference to this object.
   /// It'll trigger [RenderBox.markNeedsPaint()].
   PaintCallback onNeedPaint;
 
   /// These next two callbacks are bound to set the state of the [DistanceWidget]
-  /// so it can change the appeareance of the top AppBar.
+  /// so it can change the appearance of the top AppBar.
   ChangeEraCallback onEraChanged;
   ChangeHeaderColorCallback onHeaderColorsChanged;
 
@@ -144,8 +143,8 @@ class Distance {
   double get nextEntryOpacity => _nextEntryOpacity;
   double get prevEntryOpacity => _prevEntryOpacity;
   bool get isInteracting => _isInteracting;
-  bool get showFavorites => _showFavorites;
-  bool get isActive => _isActive;
+  //bool get showFavorites => _showFavorites;
+  //bool get isActive => _isActive;
   Color get headerTextColor => _headerTextColor;
   Color get headerBackgroundColor => _headerBackgroundColor;
   HeaderColors get currentHeaderColors => _currentHeaderColors;
@@ -155,7 +154,7 @@ class Distance {
   List<DistanceEntry> get entries => _entries;
   List<DistanceBackgroundColor> get backgroundColors => _backgroundColors;
   List<TickColors> get tickColors => _tickColors;
-  List<DistanceAsset> get renderAssets => _renderAssets;
+  //List<DistanceAsset> get renderAssets => _renderAssets;
 
 
   /// When a scale operation is detected, this setter is called:
@@ -230,7 +229,7 @@ class Distance {
 
   /// Load all the resources from the local bundle.
   ///
-  /// This function will load and decode `timline.json` from disk,
+  /// This function will load and decode `distance.json` from disk,
   /// decode the JSON file, and populate all the [DistanceEntry]s.
   Future<List<DistanceEntry>> loadFromBundle(String filename) async {
     String data = await rootBundle.loadString(filename);
@@ -255,11 +254,13 @@ class Distance {
         /// "Humans" in history, which hasn't come to an end -- yet.
         DistanceEntry distanceEntry = DistanceEntry();
         if (map.containsKey("date")) {
-          distanceEntry.type = DistanceEntryType.Incident;
+          //distanceEntry.type = DistanceEntryType.Incident;
+          distanceEntry.type = DistanceEntryType.material;
           dynamic date = map["date"];
           distanceEntry.start = date is int ? date.toDouble() : date;
         } else if (map.containsKey("start")) {
-          distanceEntry.type = DistanceEntryType.Era;
+          //distanceEntry.type = DistanceEntryType.Era;
+          distanceEntry.type = DistanceEntryType.position;
           dynamic start = map["start"];
 
           distanceEntry.start = start is int ? start.toDouble() : start;
@@ -270,6 +271,7 @@ class Distance {
         /// If a custom background color for this [DistanceEntry] is specified,
         /// extract its RGB values and save them for reference, along with the starting
         /// date of the current entry.
+        /// 背景色設定
         if (map.containsKey("background")) {
           dynamic bg = map["background"];
           if (bg is List && bg.length >= 3) {
@@ -368,7 +370,8 @@ class Distance {
         if (map.containsKey("end")) {
           dynamic end = map["end"];
           distanceEntry.end = end is int ? end.toDouble() : end;
-        } else if (distanceEntry.type == DistanceEntryType.Era) {
+       //} else if (distanceEntry.type == DistanceEntryType.Era) {
+        } else if (distanceEntry.type == DistanceEntryType.position) {
           distanceEntry.end = DateTime.now().year.toDouble() * 10.0;
         } else {
           distanceEntry.end = distanceEntry.start;
@@ -379,11 +382,11 @@ class Distance {
           distanceEntry.label = map["label"] as String;
         }
 
-        /// Some entries will also have an id
+/*        /// Some entries will also have an id
         if (map.containsKey("id")) {
           distanceEntry.id = map["id"] as String;
           _entriesById[distanceEntry.id] = distanceEntry;
-        }
+        }*/
 
 
         /// Add this entry to the list.
@@ -425,7 +428,8 @@ class Distance {
       DistanceEntry parent;
       double minDistance = double.maxFinite;
       for (DistanceEntry checkEntry in allEntries) {
-        if (checkEntry.type == DistanceEntryType.Era) {
+        //if (checkEntry.type == DistanceEntryType.Era) {
+        if (checkEntry.type == DistanceEntryType.position) {
           double distance = entry.start - checkEntry.start;
           double distanceEnd = entry.start - checkEntry.end;
           if (distance > 0 && distanceEnd < 0 && distance < minDistance) {
@@ -448,10 +452,10 @@ class Distance {
     return allEntries;
   }
 
-  /// Helper function for [MenuVignette].
+/*  /// Helper function for [MenuVignette].
   DistanceEntry getById(String id) {
     return _entriesById[id];
-  }
+  }*/
 
   /// Make sure that while scrolling we're within the correct distance bounds.
   clampScroll() {
@@ -744,7 +748,7 @@ class Distance {
     _lastEntryY = -double.maxFinite;
     _lastOnScreenEntryY = 0.0;
     _firstOnScreenEntryY = double.maxFinite;
-    _lastAssetY = -double.maxFinite;
+    //_lastAssetY = -double.maxFinite;
     _labelX = 0.0;
     _offsetDepth = 0.0;
     _currentEra = null;
@@ -757,11 +761,11 @@ class Distance {
         doneRendering = false;
       }
 
-      /// Advance all the assets and add the rendered ones into [_renderAssets].
+/*      /// Advance all the assets and add the rendered ones into [_renderAssets].
       _renderAssets = [];
       if (_advanceAssets(_entries, elapsed, animate, _renderAssets)) {
         doneRendering = false;
-      }
+      }*/
     }
 
     if (_nextEntryOpacity == 0.0) {
@@ -850,7 +854,8 @@ class Distance {
 
       double start = item.start - _renderStart;
       double end =
-      item.type == DistanceEntryType.Era ? item.end - _renderStart : start;
+      //item.type == DistanceEntryType.Era ? item.end - _renderStart : start;
+      item.type == DistanceEntryType.position ? item.end - _renderStart : start;
 
       /// Vertical position for this element.
       double y = start * scale;
@@ -877,7 +882,8 @@ class Distance {
 
           /// The best location for our label is occluded, lets see if we can bump it forward...
           &&
-          item.type == DistanceEntryType.Era &&
+          //item.type == DistanceEntryType.Era &&
+          item.type == DistanceEntryType.position &&
           _lastEntryY + fadeAnimationStart < endY) {
         targetLabelY = _lastEntryY + fadeAnimationStart + 0.5;
       }
@@ -890,6 +896,7 @@ class Distance {
       if (targetLabelOpacity > 0.0 && item.targetLabelOpacity != 1.0) {
         item.delayLabel = 0.5;
       }
+
       item.targetLabelOpacity = targetLabelOpacity;
       if (item.delayLabel > 0.0) {
         targetLabelOpacity = 0.0;
@@ -962,7 +969,8 @@ class Distance {
         }
       }
 
-      if (item.type == DistanceEntryType.Era &&
+      //if (item.type == DistanceEntryType.Era &&
+      if (item.type == DistanceEntryType.position &&
           y < 0 &&
           endY > _height &&
           depth > _offsetDepth) {
@@ -970,7 +978,8 @@ class Distance {
       }
 
       /// A new era is currently in view.
-      if (item.type == DistanceEntryType.Era && y < 0 && endY > _height / 2.0) {
+      //if (item.type == DistanceEntryType.Era && y < 0 && endY > _height / 2.0) {
+      if (item.type == DistanceEntryType.position && y < 0 && endY > _height / 2.0) {
         _currentEra = item;
       }
 
@@ -1005,7 +1014,7 @@ class Distance {
     return stillAnimating;
   }
 
-  /// Advance asset [items] with the [elapsed] time.
+/*  /// Advance asset [items] with the [elapsed] time.
   bool _advanceAssets(List<DistanceEntry> items, double elapsed, bool animate,
       List<DistanceAsset> renderAssets) {
     bool stillAnimating = false;
@@ -1087,8 +1096,8 @@ class Distance {
             stillAnimating = true;
           }
 
-          _lastAssetY =
-              targetAssetY + asset.height * AssetScreenScale + AssetPadding;
+*//*          _lastAssetY =
+              targetAssetY + asset.height * AssetScreenScale + AssetPadding*//*;
 
           if (asset.y > _height ||
               asset.y + asset.height * AssetScreenScale < 0.0) {
@@ -1113,5 +1122,5 @@ class Distance {
       }
     }
     return stillAnimating;
-  }
+  }*/
 }

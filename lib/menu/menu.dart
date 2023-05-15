@@ -1,23 +1,20 @@
 import "package:flutter/material.dart";
-
 import '../bloc_provider.dart';
 import '../color.dart';
 import '../distance/widget.dart';
 import 'menu_data.dart';
 import 'menu_section.dart';
 
-/// The Main Page of the Distance App.
+/// The Base Page of the Distance App.
 /// the card-sections for accessing the main events on the Distance,
 class MainMenuWidget extends StatefulWidget {
-
-  MainMenuWidget({Key key}) : super(key: key);
+  const MainMenuWidget({Key key}) : super(key: key);
 
   @override
   _MainMenuWidgetState createState() => _MainMenuWidgetState();
 }
 
 class _MainMenuWidgetState extends State<MainMenuWidget> {
-
 
   /// [MenuData] is a wrapper object for the data of each Card section.
   /// This data is loaded from the asset bundle during [initState()]
@@ -42,7 +39,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget> {
 
     /// The [_menu] loads a JSON file that's stored in the assets folder.
     /// This asset provides all the necessary information for the cards,
-    /// such as labels, background colors, the background Flare animation asset,
+    /// such as labels, background colors,
     /// and for each element in the expanded card, the relative position on the [Distance].
     _menu.loadFromBundle("assets/menu.json").then((bool success) {
       if (success) setState(() {}); // Load the menu.
@@ -58,8 +55,8 @@ class _MainMenuWidgetState extends State<MainMenuWidget> {
     tail
       .addAll(_menu.sections
           .map<Widget>((MenuSectionData section) => Container(
-          margin: const EdgeInsets.only(top: 20.0),
-          child: MenuSection(
+            margin: const EdgeInsets.only(top: 20.0),
+            child: MenuSection(
             section.label,
             section.backgroundColor,
             section.textColor,
@@ -67,17 +64,8 @@ class _MainMenuWidgetState extends State<MainMenuWidget> {
             navigateToDistance,
           )))
           .toList(growable: false));
-/*      ..add(Container(
-        margin: const EdgeInsets.only(top: 40.0, bottom: 22),
-        height: 1.0,
-        color: const Color.fromRGBO(151, 151, 151, 0.29),
-      ));*/
 
-
-    /// Wrap the menu in a [WillPopScope] to properly handle a pop event while searching.
     /// A [SingleChildScrollView] is used to create a scrollable view for the main menu.
-    /// This will contain a [Column] with a [Collapsible] header on top, and a [tail]
-    /// that's built according with the state of this widget.
     return Scaffold(
       appBar: AppBar(
         title: const Text("DISTANCE"),

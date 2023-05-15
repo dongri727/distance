@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
-
 import "package:flutter/services.dart" show rootBundle;
-
 import '../distance/entry.dart';
 
 /// Data container for the Section loaded in [MenuData.loadFromBundle()].
@@ -36,7 +34,6 @@ class MenuItemData {
     /// Pad the edges of the screen.
     pad = true;
 
-    //if (entry.type == DistanceEntryType.Era) {
     if (entry.type == DistanceEntryType.position) {
       start = entry.start;
       end = entry.end;
@@ -74,8 +71,7 @@ class MenuItemData {
 /// `menu.json` contains an array of objects, each with:
 /// * label - the title for the section
 /// * background - the color on the section background
-/// * color - the accent color for the menu section
-/// * asset - the background Flare/Nima asset id that will play the section background
+/// * color - the text color
 /// * items - an array of elements providing each the start and end times for that link
 /// as well as the label to display in the [MenuSection].
 class MenuData {

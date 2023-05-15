@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 import 'menu_data.dart';
 
-typedef NavigateTo(MenuItemData item);
+typedef NavigateTo = Function(MenuItemData item);
 
 /// This widget displays the single menu section of the [MainMenuWidget].
 ///
 /// There are main sections, as loaded from the menu.json file in the　assets folder.
-/// Each section has a backgroundColor, an accentColor,
+/// Each section has a backgroundColor,
 /// and a list of elements it needs to display when expanded.
 ///
 /// Since this widget expands and contracts when tapped, it needs to maintain a [State].
@@ -17,22 +17,17 @@ class MenuSection extends StatefulWidget {
   final Color backgroundColor;
   final Color accentColor;
   final List<MenuItemData> menuOptions;
-  //final String assetId;
   final NavigateTo navigateTo;
-  //final bool isActive;
 
-  MenuSection(this.title, this.backgroundColor, this.accentColor,
+  const MenuSection(this.title, this.backgroundColor, this.accentColor,
       this.menuOptions, this.navigateTo,
-      //this.isActive,
-          {
-        //this.assetId,
-        Key key})
-      : super(key: key);
+          {Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _SectionState();
 }
 
+//削ってはいけない
 /// This [State] uses the [SingleTickerProviderStateMixin] to add [vsync] to it.
 /// This allows the animation to run smoothly and avoids consuming unnecessary resources.
 class _SectionState extends State<MenuSection>
@@ -135,7 +130,7 @@ class _SectionState extends State<MenuSection>
                             widget.title,
                             style: TextStyle(
                                 fontSize: 20.0,
-                                fontFamily: "RobotoMedium",
+                                //fontFamily: "RobotoMedium",
                                 color: widget.accentColor),
                           )
                         ],
@@ -167,8 +162,8 @@ class _SectionState extends State<MenuSection>
                                                         color: widget
                                                             .accentColor,
                                                         fontSize: 20.0,
-                                                        fontFamily:
-                                                        "RobotoMedium"),
+                                                        //fontFamily: "RobotoMedium"
+                                                    ),
                                                   ))),
                                         ]));
                               }).toList())))

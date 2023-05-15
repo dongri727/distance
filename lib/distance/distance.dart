@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart' show rootBundle;
-
 import 'entry.dart';
 import 'utils.dart';
 
@@ -91,11 +89,12 @@ class Distance {
 
   Timer _steadyTimer;
 
-  /// Through these two references, the Distance can access the era and update
+  /// Through these two references, the Distance can access the position and update
   /// the top label accordingly.
   DistanceEntry _currentPosition;
   DistanceEntry _lastPosition;
 
+  ///前の事象次の事象Button
   /// These references allow to maintain a reference to the next and previous elements
   /// of the Distance, depending on which elements are currently in focus.
   /// When there's enough space on the top/bottom, the Distance will render a round button
@@ -115,9 +114,9 @@ class Distance {
   /// All the [DistanceEntry]s that are loaded from disk at boot (in [loadFromBundle()]).
   List<DistanceEntry> _entries;
 
+  //イラストのanimation関連
   /// The list of [DistanceAsset], also loaded from disk at boot.
   //List<DistanceAsset> _renderAssets;
-
   //Map<String, DistanceEntry> _entriesById = Map<String, DistanceEntry>();
 
   /// Callback set by [DistanceRenderWidget] when adding a reference to this object.
@@ -144,7 +143,7 @@ class Distance {
   double get prevEntryOpacity => _prevEntryOpacity;
   bool get isInteracting => _isInteracting;
   //bool get showFavorites => _showFavorites;
-  //bool get isActive => _isActive;
+  bool get isActive => _isActive;
   Color get headerTextColor => _headerTextColor;
   Color get headerBackgroundColor => _headerBackgroundColor;
   HeaderColors get currentHeaderColors => _currentHeaderColors;
@@ -253,11 +252,11 @@ class Distance {
         /// These entries specify a particular event such as the appeareance of
         /// "Humans" in history, which hasn't come to an end -- yet.
         DistanceEntry distanceEntry = DistanceEntry();
-        if (map.containsKey("date")) {
+        if (map.containsKey("point")) {
           //distanceEntry.type = DistanceEntryType.Incident;
           distanceEntry.type = DistanceEntryType.material;
-          dynamic date = map["date"];
-          distanceEntry.start = date is int ? date.toDouble() : date;
+          dynamic point = map["point"];
+          distanceEntry.start = point is int ? point.toDouble() : point;
         } else if (map.containsKey("start")) {
           //distanceEntry.type = DistanceEntryType.Era;
           distanceEntry.type = DistanceEntryType.position;
@@ -270,7 +269,7 @@ class Distance {
 
         /// If a custom background color for this [DistanceEntry] is specified,
         /// extract its RGB values and save them for reference, along with the starting
-        /// date of the current entry.
+        /// point of the current entry.
         /// 背景色設定
         if (map.containsKey("background")) {
           dynamic bg = map["background"];

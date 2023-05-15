@@ -1,6 +1,6 @@
 [
   {
-    "date": -15000000000,
+    "point": -15000000000,
     "label": "James Webb Space Telescope",
     "background": [0, 38, 75],
     "ticks":
@@ -17,7 +17,7 @@
     }
   },
   {
-    "date": -3844000000,
+    "point": -3844000000,
     "label": "Moon",
     "background": [31, 89, 143],
     "ticks":
@@ -34,16 +34,16 @@
     }
   },
   {
-    "date": -6000000,
+    "point": -6000000,
     "label": "Hubble Space Telescope"
 
   },
   {
-    "date": -4180000,
+    "point": -4180000,
     "label": "International Space Station"
   },
   {
-    "date": -1000000,
+    "point": -1000000,
     "label": "Polar Lights"
   },
   {
@@ -53,35 +53,35 @@
     "accent": [255, 125, 195, 184]
   },
   {
-    "date": -530000,
+    "point": -530000,
     "label": "High-altitude balloon"
   },
   {
-    "date": -150000,
+    "point": -150000,
     "label": "F-15"
   },
   {
-    "date": -100000,
+    "point": -100000,
     "label": "Jumbo Jet"
   },
   {
-    "date": -88490,
+    "point": -88490,
     "label": "Everest"
   },
   {
-    "date": -37760,
+    "point": -37760,
     "label": "Fuji"
   },
   {
-    "date": -8280,
+    "point": -8280,
     "label": "Burj Khalifa"
   },
   {
-    "date": -6340,
+    "point": -6340,
     "label": "Tokyo Sky Tree"
   },
   {
-    "date": 0,
+    "point": 0,
     "label": "Sea Level",
     "background": [255, 255,255],
     "ticks":
@@ -98,19 +98,19 @@
     }
   },
   {
-    "date": 2000,
+    "point": 2000,
     "label": "Twilight Zone"
   },
   {
-    "date": 10000,
+    "point": 10000,
     "label": "aphotic zone"
   },
   {
-    "date": 24450,
+    "point": 24450,
     "label": "Suruga Trench"
   },
   {
-    "date": 109830,
+    "point": 109830,
     "label": "Mariana Trench"
   },
   {
@@ -120,7 +120,7 @@
     "accent": [255, 128, 28, 15]
   },
   {
-    "date": 500000,
+    "point": 500000,
     "label": "Mohorovicic Discontinuity"
   },
   {
@@ -130,7 +130,7 @@
     "accent": [255, 202, 79, 63]
   },
   {
-    "date": 29000000,
+    "point": 29000000,
     "label": "Gutenberg Discontinuity"
   },
   {
@@ -140,11 +140,11 @@
     "accent": [255, 238, 155, 75]
   },
   {
-    "date": 51000000,
+    "point": 51000000,
     "label": "Lehmann Discontinuity"
   },
   {
-    "date": 64000000,
+    "point": 64000000,
     "label": "Center",
     "background": [31, 89, 143],
     "ticks":
@@ -161,7 +161,7 @@
     }
   },
   {
-    "date": 128000000,
+    "point": 128000000,
     "label": "Earth",
     "background": [31, 89, 143],
     "ticks":

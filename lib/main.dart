@@ -18,7 +18,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Distance',
         theme: ThemeData(
-            backgroundColor: background, scaffoldBackgroundColor: background),
+            //backgroundColor: background, scaffoldBackgroundColor: background,
+           useMaterial3: true,
+        ),
         home: const MenuPage(),
       ),
     );

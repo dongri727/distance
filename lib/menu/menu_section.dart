@@ -64,7 +64,7 @@ class _SectionState extends State<MenuSection>
       duration: const Duration(milliseconds: 200),
     );
 
-    /// This curve is controlled by [_controller].
+    /// This curve is controlled by [_controller].削ってはいけない
     final CurvedAnimation curve =
     CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn);
 
@@ -120,7 +120,7 @@ class _SectionState extends State<MenuSection>
                 borderRadius: BorderRadius.circular(10.0),
                 child: Column(children: <Widget>[
                   Container(
-                      height: 150.0,
+                      height: 100.0,
                       alignment: Alignment.bottomCenter,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -140,6 +140,7 @@ class _SectionState extends State<MenuSection>
                           )
                         ],
                       )),
+                  ///カードが開いたり閉じたりする
                   SizeTransition(
                       axisAlignment: 0.0,
                       axis: Axis.vertical,

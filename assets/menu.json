@@ -1,73 +1,68 @@
 [
   {
-    "label": "Billion Years",
-    "background": "#083158",
-    "color": "#ffffff",
-    "items":
-    [
-      {
-        "start": -15000000000,
-        "end": -1000000000,
-        "label": "Big Bang"
-      }
-    ]
-  },
-  {
-    "label": "Million Years",
-    "background": "#fdfdfd",
+    "label": "Deep Space",
+    "background": "#9acd32",
     "color": "#000000",
     "items":
     [
       {
-        "start": -990000000,
-        "end": -50000000,
-        "label": "Single Celled Organisms"
+        "start": -16000000000,
+        "end": -1000000000,
+        "label": "James Webb Space Telescope"
+      },
+      {
+        "start": -5000000000,
+        "end": -100000000,
+        "label": "Moon"
+      }
+    ]
+  },
+  {
+    "label": "Near Earth",
+    "background": "#9acd32",
+    "color": "#000000",
+    "items":
+    [
+      {
+        "start": -5500000,
+        "end": -3500000,
+        "label": "Hubble Space Telescope"
       },
       {
         "start": -49000000,
         "end": -1000000,
-        "label": "Animals"
+        "label": "International Space Station"
       }
     ]
   },
   {
-    "label": "Thousands Year",
-    "background": "#001d22",
-    "color": "#ffffff",
-    "items":
-    [
-      {
-        "start": -990000,
-        "end": -50000,
-        "label": "Vesvius erupted"
-      },
-      {
-        "start": -49000,
-        "end": 1000,
-        "label": "Reach the Cape of Good Hope"
-      },
-      {
-        "start": 1852,
-        "end": 1876,
-        "label": "Marie Curie"
-      }
-    ]
-  },
-  {
-    "label": "21century",
-    "background": "#fdfdfd",
+    "label": "Atomosphere",
+    "background": "#9acd32",
     "color": "#000000",
     "items":
     [
       {
-        "start": 2001,
-        "end": 2020,
-        "label": "iPhone"
+        "start": -1200000,
+        "end": -100000,
+        "label": "F-15"
+      }
+    ]
+  },
+  {
+    "label": "Earth",
+    "background": "#9acd32",
+    "color": "#000000",
+    "items":
+    [
+      {
+        "start": -90000,
+        "end": 45000,
+        "label": "Everest"
       },
       {
-        "start": 2021,
-        "end": 2050,
-        "label": "AI"
+        "start": 0,
+        "end": 640000000,
+        "label": "Core"
       }
     ]
   }

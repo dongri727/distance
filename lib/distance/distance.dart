@@ -27,8 +27,8 @@ class Distance {
   static const double EdgeRadius = 4.0;
   static const double MinChildLength = 50.0;
   static const double BubbleHeight = 50.0;
-  static const double BubbleArrowSize = 19.0;
-  static const double BubblePadding = 20.0;
+  //static const double BubbleArrowSize = 5.0;
+  static const double BubblePadding = 10.0;
   static const double BubbleTextHeight = 20.0;
   static const double AssetPadding = 30.0;
   static const double Parallax = 100.0;
@@ -837,6 +837,7 @@ class Distance {
 
   double bubbleHeight(DistanceEntry entry) {
     return BubblePadding * 2.0 + entry.lineCount * BubbleTextHeight;
+    //return 50;
   }
 
   /// Advance entry [assets] with the current [elapsed] time.

@@ -66,31 +66,33 @@ class _MainMenuWidgetState extends State<MainMenuWidget> {
             section.items,
             navigateToDistance,
           )))
-          .toList(growable: false))
-      ..add(Container(
+          .toList(growable: false));
+/*      ..add(Container(
         margin: const EdgeInsets.only(top: 40.0, bottom: 22),
         height: 1.0,
         color: const Color.fromRGBO(151, 151, 151, 0.29),
-      ));
+      ));*/
 
 
     /// Wrap the menu in a [WillPopScope] to properly handle a pop event while searching.
     /// A [SingleChildScrollView] is used to create a scrollable view for the main menu.
     /// This will contain a [Column] with a [Collapsible] header on top, and a [tail]
     /// that's built according with the state of this widget.
-    return Container(
-        color: background,
-        child: Padding(
-          padding: EdgeInsets.only(top: devicePadding.top),
-          child: SingleChildScrollView(
-              padding:
-              const EdgeInsets.only(top: 20.0, left: 20, right: 20, bottom: 20),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                  ] +
-                      tail)),
-        )
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("DISTANCE"),
+      ),
+      body: Padding(
+        padding: EdgeInsets.only(top: devicePadding.top),
+        child: SingleChildScrollView(
+            padding:
+            const EdgeInsets.only(top: 20.0, left: 20, right: 20, bottom: 20),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                ] +
+                    tail)),
+      ),
     );
   }
 }

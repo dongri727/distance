@@ -43,6 +43,16 @@
     "label": "International Space Station"
   },
   {
+    "date": -1000000,
+    "label": "Polar Lights"
+  },
+  {
+    "start": -1000000,
+    "end": -100000,
+    "label": "Atmosphere",
+    "accent": [255, 125, 195, 184]
+  },
+  {
     "date": -530000,
     "label": "High-altitude balloon"
   },

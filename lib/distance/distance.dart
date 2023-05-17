@@ -20,20 +20,16 @@ class Distance {
   static const double MoveSpeed = 10.0;
   static const double MoveSpeedInteracting = 40.0;
   static const double Deceleration = 3.0;
-  static const double GutterLeft = 45.0;
-
+  static const double GutterLeft = 45.0;//Space to the left of the scale
   static const double EdgeRadius = 4.0;
   static const double MinChildLength = 50.0;
   static const double BubbleHeight = 50.0;
-  //static const double BubbleArrowSize = 5.0;
   static const double BubblePadding = 10.0;
   static const double BubbleTextHeight = 20.0;
-  //static const double AssetPadding = 30.0;
   static const double Parallax = 100.0;
-  static const double AssetScreenScale = 0.3;
+  //static const double AssetScreenScale = 0.3;
   static const double InitialViewportPadding = 100.0;
   static const double TravelViewportPaddingTop = 400.0;
-
   static const double ViewportPaddingTop = 120.0;
   static const double ViewportPaddingBottom = 100.0;
   static const int SteadyMilliseconds = 500;
@@ -105,6 +101,7 @@ class Distance {
   DistanceEntry _renderPrevEntry;
 
   /// A gradient is shown on the background, depending on the [_currentPosition] we're in.
+  /// グラデーション
   List<DistanceBackgroundColor> _backgroundColors;
 
   /// [Ticks] also have custom colors so that they are always visible with the changing background.
@@ -114,10 +111,10 @@ class Distance {
   /// All the [DistanceEntry]s that are loaded from disk at boot (in [loadFromBundle()]).
   List<DistanceEntry> _entries;
 
-  //イラストのanimation関連
+/*  //イラストのanimation関連
   /// The list of [DistanceAsset], also loaded from disk at boot.
   //List<DistanceAsset> _renderAssets;
-  //Map<String, DistanceEntry> _entriesById = Map<String, DistanceEntry>();
+  //Map<String, DistanceEntry> _entriesById = Map<String, DistanceEntry>();*/
 
   /// Callback set by [DistanceRenderWidget] when adding a reference to this object.
   /// It'll trigger [RenderBox.markNeedsPaint()].
@@ -125,6 +122,7 @@ class Distance {
 
   /// These next two callbacks are bound to set the state of the [DistanceWidget]
   /// so it can change the appearance of the top AppBar.
+  /// appBarの領域表示
   ChangePositionCallback onPositionChanged;
   ChangeHeaderColorCallback onHeaderColorsChanged;
 
@@ -142,7 +140,6 @@ class Distance {
   double get nextEntryOpacity => _nextEntryOpacity;
   double get prevEntryOpacity => _prevEntryOpacity;
   bool get isInteracting => _isInteracting;
-  //bool get showFavorites => _showFavorites;
   bool get isActive => _isActive;
   Color get headerTextColor => _headerTextColor;
   Color get headerBackgroundColor => _headerBackgroundColor;
@@ -153,7 +150,6 @@ class Distance {
   List<DistanceEntry> get entries => _entries;
   List<DistanceBackgroundColor> get backgroundColors => _backgroundColors;
   List<TickColors> get tickColors => _tickColors;
-  //List<DistanceAsset> get renderAssets => _renderAssets;
 
 
   /// When a scale operation is detected, this setter is called:
@@ -196,7 +192,7 @@ class Distance {
 
     if (isIt) {
       /// If another timer is still needed, recreate it.
-      _steadyTimer = Timer(Duration(milliseconds: SteadyMilliseconds), () {
+      _steadyTimer = Timer(const Duration(milliseconds: SteadyMilliseconds), () {
         _steadyTimer = null;
         _isSteady = true;
         _startRendering();
@@ -247,18 +243,14 @@ class Distance {
       /// Sanity check.
       if (map != null) {
         /// Create the current entry and fill in the current date if it's
-        /// an `Incident`, or look for the `start` property if it's an `Era` instead.
+        /// an `material`, or look for the `start` property if it's a `Position` instead.
         /// Some entries will have a `start` element, but not an `end` specified.
-        /// These entries specify a particular event such as the appeareance of
-        /// "Humans" in history, which hasn't come to an end -- yet.
         DistanceEntry distanceEntry = DistanceEntry();
         if (map.containsKey("point")) {
-          //distanceEntry.type = DistanceEntryType.Incident;
           distanceEntry.type = DistanceEntryType.material;
           dynamic point = map["point"];
           distanceEntry.start = point is int ? point.toDouble() : point;
         } else if (map.containsKey("start")) {
-          //distanceEntry.type = DistanceEntryType.Era;
           distanceEntry.type = DistanceEntryType.position;
           dynamic start = map["start"];
 
@@ -361,17 +353,14 @@ class Distance {
           }
         }
 
-        /// Some elements will have an `end` time specified.
+        /// Some elements will have an `end` point specified.
         /// If not `end` key is present in this entry, create the value based
-        /// on the type of the event:
-        /// - Eras use the current year as an end time.
-        /// - Other entries are just single points in time (start == end).
+        /// on the type of the zone:
         if (map.containsKey("end")) {
           dynamic end = map["end"];
           distanceEntry.end = end is int ? end.toDouble() : end;
-       //} else if (distanceEntry.type == DistanceEntryType.Era) {
-        } else if (distanceEntry.type == DistanceEntryType.position) {
-          distanceEntry.end = DateTime.now().year.toDouble() * 10.0;
+/*        } else if (distanceEntry.type == DistanceEntryType.position) {
+          distanceEntry.end = DateTime.now().year.toDouble() * 10.0;*/
         } else {
           distanceEntry.end = distanceEntry.start;
         }
@@ -409,7 +398,7 @@ class Distance {
     /// List for "root" entries, i.e. entries with no parents.
     _entries = [];
 
-    /// Build up hierarchy (Eras are grouped into "Spanning Eras" and Events are placed into the Eras they belong to).
+    /// Build up hierarchy (Position are grouped into "Spanning Position" and Events are placed into the Position they belong to).
     DistanceEntry previous;
     for (DistanceEntry entry in allEntries) {
       if (entry.start < _timeMin) {
@@ -427,7 +416,6 @@ class Distance {
       DistanceEntry parent;
       double minDistance = double.maxFinite;
       for (DistanceEntry checkEntry in allEntries) {
-        //if (checkEntry.type == DistanceEntryType.Era) {
         if (checkEntry.type == DistanceEntryType.position) {
           double distance = entry.start - checkEntry.start;
           double distanceEnd = entry.start - checkEntry.end;
@@ -551,9 +539,9 @@ class Distance {
 
       _simulationTime = 0.0;
       if (_platform == TargetPlatform.iOS) {
-        _scrollPhysics = BouncingScrollPhysics();
+        _scrollPhysics = const BouncingScrollPhysics();
       } else {
-        _scrollPhysics = ClampingScrollPhysics();
+        _scrollPhysics = const ClampingScrollPhysics();
       }
       _scrollMetrics = FixedScrollMetrics(
           minScrollExtent: double.negativeInfinity,
@@ -691,7 +679,7 @@ class Distance {
     scale = _height / (_renderEnd - _renderStart);
 
     /// Update color screen positions.
-    if (_tickColors != null && _tickColors.length > 0) {
+    if (_tickColors != null && _tickColors.isNotEmpty) {
       double lastStart = _tickColors.first.start;
       for (TickColors color in _tickColors) {
         color.screenY =
@@ -747,7 +735,6 @@ class Distance {
     _lastEntryY = -double.maxFinite;
     _lastOnScreenEntryY = 0.0;
     _firstOnScreenEntryY = double.maxFinite;
-    //_lastAssetY = -double.maxFinite;
     _labelX = 0.0;
     _offsetDepth = 0.0;
     _currentPosition = null;
@@ -759,12 +746,6 @@ class Distance {
           _entries, _gutterWidth + LineSpacing, scale, elapsed, animate, 0)) {
         doneRendering = false;
       }
-
-/*      /// Advance all the assets and add the rendered ones into [_renderAssets].
-      _renderAssets = [];
-      if (_advanceAssets(_entries, elapsed, animate, _renderAssets)) {
-        doneRendering = false;
-      }*/
     }
 
     if (_nextEntryOpacity == 0.0) {
@@ -772,6 +753,7 @@ class Distance {
     }
 
     /// Determine next entry's opacity and interpolate, if needed, towards that value.
+    /// 重なって消える機能？
     double targetNextEntryOpacity = _lastOnScreenEntryY > _height / 1.7 ||
         !_isSteady ||
         _distanceToNextEntry < 0.01 ||
@@ -816,7 +798,7 @@ class Distance {
       _renderLabelX += dl * min(1.0, elapsed * 6.0);
     }
 
-    /// If a new era is currently in view, callback.
+    /// If a new position is currently in view, callback.
     if (_currentPosition != _lastPosition) {
       _lastPosition = _currentPosition;
       if (onPositionChanged != null) {
@@ -838,6 +820,7 @@ class Distance {
     return doneRendering;
   }
 
+  ///吹き出しサイズ
   double bubbleHeight(DistanceEntry entry) {
     return BubblePadding * 2.0 + entry.lineCount * BubbleTextHeight;
     //return 50;
@@ -853,7 +836,6 @@ class Distance {
 
       double start = item.start - _renderStart;
       double end =
-      //item.type == DistanceEntryType.Era ? item.end - _renderStart : start;
       item.type == DistanceEntryType.position ? item.end - _renderStart : start;
 
       /// Vertical position for this element.
@@ -881,7 +863,6 @@ class Distance {
 
           /// The best location for our label is occluded, lets see if we can bump it forward...
           &&
-          //item.type == DistanceEntryType.Era &&
           item.type == DistanceEntryType.position &&
           _lastEntryY + fadeAnimationStart < endY) {
         targetLabelY = _lastEntryY + fadeAnimationStart + 0.5;
@@ -968,7 +949,6 @@ class Distance {
         }
       }
 
-      //if (item.type == DistanceEntryType.Era &&
       if (item.type == DistanceEntryType.position &&
           y < 0 &&
           endY > _height &&
@@ -977,7 +957,6 @@ class Distance {
       }
 
       /// A new position is currently in view.
-      //if (item.type == DistanceEntryType.Era && y < 0 && endY > _height / 2.0) {
       if (item.type == DistanceEntryType.position && y < 0 && endY > _height / 2.0) {
         _currentPosition = item;
       }
@@ -1012,114 +991,4 @@ class Distance {
     }
     return stillAnimating;
   }
-
-/*  /// Advance asset [items] with the [elapsed] time.
-  bool _advanceAssets(List<DistanceEntry> items, double elapsed, bool animate,
-      List<DistanceAsset> renderAssets) {
-    bool stillAnimating = false;
-    for (DistanceEntry item in items) {
-      /// Sanity check.
-      if (item.asset != null) {
-        double y = item.labelY;
-        double halfHeight = _height / 2.0;
-        double thresholdAssetY = y + ((y - halfHeight) / halfHeight) * Parallax;
-        double targetAssetY =
-            thresholdAssetY - item.asset.height * AssetScreenScale / 2.0;
-
-        /// Determine if the current entry is visible or not.
-        double targetAssetOpacity =
-            (thresholdAssetY - _lastAssetY < 0 ? 0.0 : 1.0) *
-                item.opacity *
-                item.labelOpacity;
-
-        /// Debounce asset becoming visible.
-        if (targetAssetOpacity > 0.0 && item.targetAssetOpacity != 1.0) {
-          item.delayAsset = 0.25;
-        }
-        item.targetAssetOpacity = targetAssetOpacity;
-        if (item.delayAsset > 0.0) {
-          /// If this item has been debounced, update it's debounce time.
-          targetAssetOpacity = 0.0;
-          item.delayAsset -= elapsed;
-          stillAnimating = true;
-        }
-
-        /// Determine if the entry needs to be scaled.
-        double targetScale = targetAssetOpacity;
-        double targetScaleVelocity = targetScale - item.asset.scale;
-        if (!animate || targetScale == 0) {
-          item.asset.scaleVelocity = targetScaleVelocity;
-        } else {
-          double dvy = targetScaleVelocity - item.asset.scaleVelocity;
-          item.asset.scaleVelocity += dvy * elapsed * 18.0;
-        }
-
-        item.asset.scale += item.asset.scaleVelocity * elapsed * 20.0;
-        if (animate &&
-            (item.asset.scaleVelocity.abs() > 0.01 ||
-                targetScaleVelocity.abs() > 0.01)) {
-          stillAnimating = true;
-        }
-
-        DistanceAsset asset = item.asset;
-        if (asset.opacity == 0.0) {
-          /// Item was invisible, just pop it to the right place and stop velocity.
-          asset.y = targetAssetY;
-          asset.velocity = 0.0;
-        }
-
-        /// Determinte the opacity delta and interpolate towards that value if needed.
-        double da = targetAssetOpacity - asset.opacity;
-        if (!animate || da.abs() < 0.01) {
-          asset.opacity = targetAssetOpacity;
-        } else {
-          stillAnimating = true;
-          asset.opacity += da * min(1.0, elapsed * 15.0);
-        }
-
-        /// This asset is visible.
-        if (asset.opacity > 0.0) {
-          /// Calculate the vertical delta, and assign the interpolated value.
-          double targetAssetVelocity = max(_lastAssetY, targetAssetY) - asset.y;
-          double dvay = targetAssetVelocity - asset.velocity;
-          if (dvay.abs() > _height) {
-            asset.y = targetAssetY;
-            asset.velocity = 0.0;
-          } else {
-            asset.velocity += dvay * elapsed * 15.0;
-            asset.y += asset.velocity * elapsed * 17.0;
-          }
-
-          /// Check if we reached our target and flag it if not.
-          if (asset.velocity.abs() > 0.01 || targetAssetVelocity.abs() > 0.01) {
-            stillAnimating = true;
-          }
-
-*//*          _lastAssetY =
-              targetAssetY + asset.height * AssetScreenScale + AssetPadding*//*;
-
-          if (asset.y > _height ||
-              asset.y + asset.height * AssetScreenScale < 0.0) {
-
-          } else {
-            /// Item is in view, apply the new animation time and advance the actor.
-
-            /// Add this asset to the list of rendered assets.
-            renderAssets.add(item.asset);
-          }
-        } else {
-          /// [item] is not visible.
-          item.asset.y = max(_lastAssetY, targetAssetY);
-        }
-      }
-
-      if (item.children != null && item.isVisible) {
-        /// Proceed down the hierarchy.
-        if (_advanceAssets(item.children, elapsed, animate, renderAssets)) {
-          stillAnimating = true;
-        }
-      }
-    }
-    return stillAnimating;
-  }*/
 }

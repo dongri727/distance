@@ -35,7 +35,7 @@
   },
   {
     "start": -7000000,
-    "end": -900000,
+    "end": -1000000,
     "label": "Near Earth Space",
     "accent": [255, 125, 195, 184]
   },
@@ -48,12 +48,12 @@
     "label": "International Space Station"
   },
   {
-    "point": -1000000,
+    "point": -1100000,
     "label": "Polar Lights"
   },
   {
     "start": -1000000,
-    "end": -100000,
+    "end": -80000,
     "label": "Atmosphere",
     "accent": [255, 125, 195, 184]
   },
@@ -72,6 +72,12 @@
   {
     "point": -88490,
     "label": "Everest"
+  },
+  {
+    "start": -80000,
+    "end": 0,
+    "label": "Land",
+    "accent": [255, 125, 195, 184]
   },
   {
     "point": -37760,
@@ -101,6 +107,12 @@
       "background": [113, 152, 188, 240],
       "text": [255, 255, 255, 157]
     }
+  },
+  {
+    "start": 0,
+    "end": 20000,
+    "label": "Sea",
+    "accent": [255, 125, 195, 184]
   },
   {
     "point": 2000,

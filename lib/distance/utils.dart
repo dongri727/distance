@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'dart:ui';
-
 import 'entry.dart';
 
 Color interpolateColor(Color from, Color to, double elapsed) {

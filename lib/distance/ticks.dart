@@ -33,6 +33,7 @@ class Ticks {
 
     /// The width of the left panel can expand and contract if the favorites-view is activated,
     /// by pressing the button on the top-right corner of the distance.
+    /// ただしこのアプリにfavorites機能はない
     double gutterWidth = distance.gutterWidth;
 
     /// Calculate spacing based on current scale
@@ -72,7 +73,6 @@ class Ticks {
     /// depending on the current era. The [TickColors] object, in `distance_utils.dart`,
     /// wraps this information.
     List<TickColors> tickColors = distance.tickColors;
-    //if (tickColors != null && tickColors.length > 0) {
     if (tickColors != null && tickColors.isNotEmpty) {
       /// Build up the color stops for the linear gradient.
       double rangeStart = tickColors.first.start;

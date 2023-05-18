@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 import '../menu/menu_data.dart';
 import 'distance.dart';
 import 'entry.dart';
@@ -130,7 +130,7 @@ class DistanceRenderObject extends RenderBox {
       return;
     }
 
-    /// Adjust the current distance padding and consequentely the viewport.
+    /// Adjust the current distance padding and consequently the viewport.
     if (_focusItem.pad) {
       distance.padding = EdgeInsets.only(
           top: topOverlap + _focusItem.padTop + Distance.Parallax,
@@ -225,33 +225,6 @@ class DistanceRenderObject extends RenderBox {
     double renderEnd = _distance.renderEnd;
     double scale = size.height / (renderEnd - renderStart);
 
-/*    if (distance.renderAssets != null) {
-      canvas.save();
-      canvas.clipRect(offset & size);
-      for (DistanceAsset asset in distance.renderAssets) {
-        if (asset.opacity > 0) {
-          double rs = 0.2 + asset.scale * 0.8;
-
-          double w = asset.width * Distance.AssetScreenScale;
-          double h = asset.height * Distance.AssetScreenScale;
-
-          /// Draw the correct asset.
-          if (asset is DistanceImage) {
-            canvas.drawImageRect(
-                asset.image,
-                Rect.fromLTWH(0.0, 0.0, asset.width, asset.height),
-                Rect.fromLTWH(
-                    offset.dx + size.width - w, asset.y, w * rs, h * rs),
-                Paint()
-                  ..isAntiAlias = true
-                  ..filterQuality = ui.FilterQuality.low
-                  ..color = Colors.white.withOpacity(asset.opacity));
-          }
-        }
-      }
-      canvas.restore();
-    }*/
-
     /// Paint the [Ticks] on the left side of the screen.
     canvas.save();
     canvas.clipRect(Rect.fromLTWH(
@@ -284,7 +257,7 @@ class DistanceRenderObject extends RenderBox {
       double x = offset.dx + _distance.gutterWidth - Distance.GutterLeft;
       double opacity = _distance.nextEntryOpacity;
       Color color = Color.fromRGBO(69, 211, 197, opacity);
-      double pageSize = (_distance.renderEnd - _distance.renderStart);
+      //double pageSize = (_distance.renderEnd - _distance.renderStart);
       double pageReference = _distance.renderEnd;
 
       /// Use a Paragraph to draw the arrow's label and page scrolls on canvas:
@@ -295,7 +268,7 @@ class DistanceRenderObject extends RenderBox {
       /// 5. Draw the Paragraph at the right offset.
       const double MaxLabelWidth = 1200.0;
       ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
-          textAlign: TextAlign.start, fontFamily: "Roboto", fontSize: 20.0))
+          textAlign: TextAlign.start, /*fontFamily: "Roboto",*/ fontSize: 20.0))
         ..pushStyle(ui.TextStyle(color: color));
 
       builder.addText(_distance.nextEntry.label);
@@ -345,18 +318,17 @@ class DistanceRenderObject extends RenderBox {
 
       builder = ui.ParagraphBuilder(ui.ParagraphStyle(
           textAlign: TextAlign.center,
-          fontFamily: "Roboto",
+          //fontFamily: "Roboto",
           fontSize: 14.0,
           height: 1.3))
         ..pushStyle(ui.TextStyle(color: color));
 
       double timeUntil = _distance.nextEntry.start - pageReference;
-      double pages = timeUntil / pageSize;
-      NumberFormat formatter = NumberFormat.compact();
-      String pagesFormatted = formatter.format(pages);
-      String until = "in " +
-          DistanceEntry.formatDistance(timeUntil).toLowerCase() +
-          "\n($pagesFormatted page scrolls)";
+      //double pages = timeUntil / pageSize;
+      //NumberFormat formatter = NumberFormat.compact();
+      //String pagesFormatted = formatter.format(pages);
+      //String until = "in ${DistanceEntry.formatDistance(timeUntil).toLowerCase()}\n($pagesFormatted page scrolls)";
+      String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
       builder.addText(until);
       labelParagraph = builder.build();
       labelParagraph.layout(ui.ParagraphConstraints(width: size.width));
@@ -377,17 +349,17 @@ class DistanceRenderObject extends RenderBox {
       double x = offset.dx + _distance.gutterWidth - Distance.GutterLeft;
       double opacity = _distance.prevEntryOpacity;
       Color color = Color.fromRGBO(69, 211, 197, opacity);
-      double pageSize = (_distance.renderEnd - _distance.renderStart);
+      //double pageSize = (_distance.renderEnd - _distance.renderStart);
       double pageReference = _distance.renderEnd;
 
       const double MaxLabelWidth = 1200.0;
       ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
-          textAlign: TextAlign.start, fontFamily: "Roboto", fontSize: 20.0))
+          textAlign: TextAlign.start, /*fontFamily: "Roboto",*/ fontSize: 20.0))
         ..pushStyle(ui.TextStyle(color: color));
 
       builder.addText(_distance.prevEntry.label);
       ui.Paragraph labelParagraph = builder.build();
-      labelParagraph.layout(ui.ParagraphConstraints(width: MaxLabelWidth));
+      labelParagraph.layout(const ui.ParagraphConstraints(width: MaxLabelWidth));
 
       double y = offset.dy + topOverlap + 20.0;
       double labelX =
@@ -427,17 +399,17 @@ class DistanceRenderObject extends RenderBox {
 
       builder = ui.ParagraphBuilder(ui.ParagraphStyle(
           textAlign: TextAlign.center,
-          fontFamily: "Roboto",
+          //fontFamily: "Roboto",
           fontSize: 14.0,
           height: 1.3))
         ..pushStyle(ui.TextStyle(color: color));
 
       double timeUntil = _distance.prevEntry.start - pageReference;
-      double pages = timeUntil / pageSize;
-      NumberFormat formatter = NumberFormat.compact();
-      String pagesFormatted = formatter.format(pages.abs());
-      String until = DistanceEntry.formatDistance(timeUntil).toLowerCase() +
-          "\n($pagesFormatted page scrolls)";
+      //double pages = timeUntil / pageSize;
+      //NumberFormat formatter = NumberFormat.compact();
+      //String pagesFormatted = formatter.format(pages.abs());
+      //String until = "${DistanceEntry.formatDistance(timeUntil).toLowerCase()}\n($pagesFormatted page scrolls)";
+      String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
       builder.addText(until);
       labelParagraph = builder.build();
       labelParagraph.layout(ui.ParagraphConstraints(width: size.width));
@@ -454,7 +426,7 @@ class DistanceRenderObject extends RenderBox {
   /// Given a list of [entries], draw the label with its bubble beneath.
   /// Draw also the dots&lines on the left side of the Distance. These represent
   /// the starting/ending points for a given event and are meant to give the idea of
-  /// the timespan encompassing that event, as well as putting the vent into context
+  /// the time span encompassing that event, as well as putting the vent into context
   /// relative to the other events.
   void drawItems(PaintingContext context, Offset offset,
       List<DistanceEntry> entries, double x, double scale, int depth) {
@@ -476,15 +448,11 @@ class DistanceRenderObject extends RenderBox {
           entryOffset,
           Distance.EdgeRadius,
           Paint()
-            ..color = (item.accent != null
-                ? item.accent
-                : lineColors[depth % lineColors.length])
+            ..color = (item.accent ?? lineColors[depth % lineColors.length])
                 .withOpacity(item.opacity));
       if (legOpacity > 0.0) {
         Paint legPaint = Paint()
-          ..color = (item.accent != null
-              ? item.accent
-              : lineColors[depth % lineColors.length])
+          ..color = (item.accent ?? lineColors[depth % lineColors.length])
               .withOpacity(legOpacity);
 
         /// Draw the line connecting the start&point of this item on the distance.
@@ -505,13 +473,13 @@ class DistanceRenderObject extends RenderBox {
 
       /// Use [ui.ParagraphBuilder] to construct the label for canvas.
       ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
-          textAlign: TextAlign.start, fontFamily: "Roboto", fontSize: 20.0))
+          textAlign: TextAlign.start, /*fontFamily: "Roboto",*/ fontSize: 20.0))
         ..pushStyle(
             ui.TextStyle(color: const Color.fromRGBO(255, 255, 255, 1.0)));
 
       builder.addText(item.label);
       ui.Paragraph labelParagraph = builder.build();
-      labelParagraph.layout(ui.ParagraphConstraints(width: MaxLabelWidth));
+      labelParagraph.layout(const ui.ParagraphConstraints(width: MaxLabelWidth));
 
       double textWidth =
           labelParagraph.maxIntrinsicWidth * item.opacity * item.labelOpacity;
@@ -529,9 +497,7 @@ class DistanceRenderObject extends RenderBox {
       canvas.drawPath(
           bubble,
           Paint()
-            ..color = (item.accent != null
-                ? item.accent
-                : lineColors[depth % lineColors.length])
+            ..color = (item.accent ?? lineColors[depth % lineColors.length])
                 .withOpacity(item.opacity * item.labelOpacity));
       canvas
           .clipRect(Rect.fromLTWH(BubblePadding, 0.0, textWidth, bubbleHeight));

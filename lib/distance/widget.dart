@@ -272,7 +272,7 @@ class _DistanceWidgetState extends State<DistanceWidget> {
                               _positionName,
                               textAlign: TextAlign.left,
                               style: TextStyle(
-                                  fontFamily: "RobotoMedium",
+                                  //fontFamily: "RobotoMedium",
                                   fontSize: 20.0,
                                   color: _headerTextColor != null
                                       ? _headerTextColor

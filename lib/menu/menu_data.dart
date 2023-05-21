@@ -93,7 +93,9 @@ class MenuData {
           menuSection.backgroundColor = Color(int.parse(
               (map["background"] as String).substring(1, 7),
               radix: 16) +
-              0xFF000000);
+              //0xFF000000,
+              0x80000000,
+          );
         }
         if (map.containsKey("color")) {
           menuSection.textColor = Color(

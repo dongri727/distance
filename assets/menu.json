@@ -1,6 +1,6 @@
 [
   {
-    "label": "Deep Space",
+    "label": "Deep Space (outward)",
     "background": "#9acd32",
     "color": "#2f4f4f",
     "items":
@@ -24,12 +24,12 @@
     "items":
     [
       {
-        "start": -5500000,
+        "start": -7000000,
         "end": -3500000,
         "label": "Hubble Space Telescope"
       },
       {
-        "start": -49000000,
+        "start": -4900000,
         "end": -1000000,
         "label": "International Space Station"
       }
@@ -55,14 +55,37 @@
     "items":
     [
       {
-        "start": -90000,
-        "end": 45000,
+        "start": -110000,
+        "end": 30000,
         "label": "Everest"
       },
       {
-        "start": 0,
-        "end": 640000000,
+        "start": 20000,
+        "end": 65000000,
         "label": "Core"
+      }
+    ]
+  },
+  {
+    "label": "Deep Space (inward)",
+    "background": "#9acd32",
+    "color": "#2f4f4f",
+    "items":
+    [
+      {
+        "start": -16000000000,
+        "end": -1000000000,
+        "label": "Venus"
+      },
+      {
+        "start": -5000000000,
+        "end": -100000000,
+        "label": "Mercury"
+      },
+      {
+        "start": -5000000000,
+        "end": -100000000,
+        "label": "Sun"
       }
     ]
   }

@@ -6,6 +6,7 @@ import 'color.dart';
 import 'menu/menu.dart';
 
 
+
 /// The app is wrapped by a [BlocProvider]. This allows the child widgets
 /// to access other components throughout the hierarchy without the need
 /// to pass those references around.
@@ -18,8 +19,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Distance',
         theme: ThemeData(
+          //textTheme: GoogleFonts.shadowsIntoLightTextTheme(),
             //backgroundColor: background, scaffoldBackgroundColor: background,
            useMaterial3: true,
+
         ),
         home: const MenuPage(),
       ),

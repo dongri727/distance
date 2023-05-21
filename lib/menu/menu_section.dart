@@ -49,6 +49,12 @@ class _SectionState extends State<MenuSection>
   /// Detects which state the widget is currently in, and triggers the animation upon change.
   bool _isExpanded = false;
 
+  ///ChatGPTの追加したコード
+  /// セクションのアイコンを切り替えるためのメソッド
+  IconData _getSectionIcon() {
+    return _isExpanded ? Icons.arrow_drop_down : Icons.arrow_right;
+  }
+
   /// Here we initialize the fields described above, and set up the widget to its initial state.
   @override
   initState() {
@@ -110,11 +116,13 @@ class _SectionState extends State<MenuSection>
         child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                color: widget.backgroundColor),
+                color: widget.backgroundColor
+            ),
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
                 child: Column(children: <Widget>[
                   Container(
+                      //color: Colors.grey,
                       height: 100.0,
                       alignment: Alignment.bottomCenter,
                       child: Row(
@@ -124,7 +132,7 @@ class _SectionState extends State<MenuSection>
                               height: 21.0,
                               width: 21.0,
                               margin: const EdgeInsets.all(18.0),
-                              child: const Icon(Icons.add)
+                              child: Icon(_getSectionIcon()),
                           ),
                           Text(
                             widget.title,

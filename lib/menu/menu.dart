@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import '../bloc_provider.dart';
-import '../color.dart';
 import '../distance/widget.dart';
 import 'menu_data.dart';
 import 'menu_section.dart';
@@ -77,9 +76,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget> {
             const EdgeInsets.only(top: 20.0, left: 20, right: 20, bottom: 20),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                ] +
-                    tail)),
+                children: <Widget>[] + tail)),
       ),
     );
   }

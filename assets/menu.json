@@ -6,7 +6,7 @@
     "items":
     [
       {
-        "start": -16000000000,
+        "start": -20000000000,
         "end": -1000000000,
         "label": "James Webb Space Telescope"
       },
@@ -73,18 +73,8 @@
     "items":
     [
       {
-        "start": -16000000000,
-        "end": -1000000000,
-        "label": "Venus"
-      },
-      {
-        "start": -5000000000,
-        "end": -100000000,
-        "label": "Mercury"
-      },
-      {
-        "start": -5000000000,
-        "end": -100000000,
+        "start": 100000000,
+        "end": 15000000000,
         "label": "Sun"
       }
     ]

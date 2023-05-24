@@ -38,12 +38,6 @@
     }
   },
   {
-    "start": -7000000,
-    "end": -1000000,
-    "label": "Near Earth Space",
-    "accent": [27, 79, 128, 240]
-  },
-  {
     "point": -6000000,
     "label": "Hubble Space Telescope"
   },
@@ -52,19 +46,14 @@
     "label": "International Space Station"
   },
   {
-    "point": -1100000,
+    "point": -1000000,
     "label": "Polar Lights"
-  },
-  {
-    "start": -1000000,
-    "end": -80000,
-    "label": "Atmosphere",
-    "accent": [255, 125, 195, 184]
   },
   {
     "point": -530000,
     "label": "High-altitude balloon"
   },
+
   {
     "point": -150000,
     "label": "F-15"
@@ -76,12 +65,6 @@
   {
     "point": -88490,
     "label": "Everest"
-  },
-  {
-    "start": -80000,
-    "end": 0,
-    "label": "Land",
-    "accent": [255, 125, 195, 184]
   },
   {
     "point": -37760,
@@ -97,26 +80,7 @@
   },
   {
     "point": 0,
-    "label": "Sea Level",
-    "background": [255, 255, 255],
-    "ticks":
-    {
-      "background": [245, 245, 245, 240],
-      "long": [0, 0, 0, 60],
-      "short": [0, 0, 0, 35],
-      "text": [0, 0, 0, 110]
-    },
-    "header":
-    {
-      "background": [245, 245, 245, 240],
-      "text": [0, 0, 0, 110]
-    }
-  },
-  {
-    "start": 0,
-    "end": 20000,
-    "label": "Sea",
-    "accent": [255, 125, 195, 184]
+    "label": "Sea Level"
   },
   {
     "point": 2000,
@@ -132,33 +96,28 @@
   },
   {
     "point": 109830,
-    "label": "Mariana Trench"
-  },
-  {
-    "start": 20000,
-    "end": 500000,
-    "label": "Crust",
-    "accent": [255, 128, 28, 15]
+    "label": "Mariana Trench",
+    "background": [255, 255, 255],
+    "ticks":
+    {
+      "background": [245, 245, 245, 240],
+      "long": [0, 0, 0, 60],
+      "short": [0, 0, 0, 35],
+      "text": [0, 0, 0, 110]
+    },
+    "header":
+    {
+      "background": [245, 245, 245, 240],
+      "text": [0, 0, 0, 110]
+    }
   },
   {
     "point": 500000,
     "label": "Mohorovicic Discontinuity"
   },
   {
-    "start": 500000,
-    "end": 29000000,
-    "label": "Mantle",
-    "accent": [255, 202, 79, 63]
-  },
-  {
     "point": 29000000,
     "label": "Gutenberg Discontinuity"
-  },
-  {
-    "start": 29000000,
-    "end": 99000000,
-    "label": "Core",
-    "accent": [255, 238, 155, 75]
   },
   {
     "point": 51000000,
@@ -174,53 +133,14 @@
   },
   {
     "point": 414000000000,
-    "label": "Venus",
-    "background": [31, 89, 143],
-    "ticks":
-    {
-      "background": [27, 79, 128, 240],
-      "long": [255, 255, 255, 75],
-      "short": [255, 255, 255, 51],
-      "text": [255, 255, 255, 157]
-    },
-    "header":
-    {
-      "background": [27, 79, 128, 240],
-      "text": [255, 255, 255, 157]
-    }
+    "label": "Venus"
   },
   {
     "point": 773000000000,
-    "label": "Mercury",
-    "background": [0, 38, 75],
-    "ticks":
-    {
-      "background": [20, 57, 92, 240],
-      "long": [255, 255, 255, 75],
-      "short": [255, 255, 255, 51],
-      "text": [255, 255, 255, 157]
-    },
-    "header":
-    {
-      "background": [11, 47, 81, 94],
-      "text": [255, 255, 255, 157]
-    }
+    "label": "Mercury"
   },
   {
     "point": 1495000000000,
-    "label": "Sun",
-    "background": [255, 255, 255],
-    "ticks":
-    {
-      "background": [245, 245, 245, 240],
-      "long": [0, 0, 0, 60],
-      "short": [0, 0, 0, 35],
-      "text": [0, 0, 0, 110]
-    },
-    "header":
-    {
-      "background": [245, 245, 245, 240],
-      "text": [0, 0, 0, 110]
-    }
+    "label": "Sun"
   }
 ]

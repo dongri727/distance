@@ -23,7 +23,7 @@ class DistanceWidget extends StatefulWidget {
 }
 
 class _DistanceWidgetState extends State<DistanceWidget> {
-  static const String defaultPositionName = "Deep Space";
+  static const String defaultPositionName = "Distance";
   static const double topOverlap = 56.0;
 
   /// These variables are used to calculate the correct viewport for the distance

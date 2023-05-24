@@ -1,80 +1,13 @@
 [
   {
-    "label": "Deep Space (outward)",
+    "label": "Distance",
     "background": "#9acd32",
     "color": "#2f4f4f",
     "items":
     [
       {
-        "start": -20000000000,
-        "end": -1000000000,
-        "label": "James Webb Space Telescope"
-      },
-      {
-        "start": -5000000000,
-        "end": -100000000,
-        "label": "Moon"
-      }
-    ]
-  },
-  {
-    "label": "Near Earth Space",
-    "background": "#9acd32",
-    "color": "#2f4f4f",
-    "items":
-    [
-      {
-        "start": -7000000,
-        "end": -3500000,
-        "label": "Hubble Space Telescope"
-      },
-      {
-        "start": -4900000,
-        "end": -1000000,
-        "label": "International Space Station"
-      }
-    ]
-  },
-  {
-    "label": "Atmosphere",
-    "background": "#9acd32",
-    "color": "#2f4f4f",
-    "items":
-    [
-      {
-        "start": -1200000,
-        "end": -100000,
-        "label": "F-15"
-      }
-    ]
-  },
-  {
-    "label": "Earth",
-    "background": "#9acd32",
-    "color": "#2f4f4f",
-    "items":
-    [
-      {
-        "start": -110000,
-        "end": 30000,
-        "label": "Everest"
-      },
-      {
-        "start": 20000,
-        "end": 65000000,
-        "label": "Core"
-      }
-    ]
-  },
-  {
-    "label": "Deep Space (inward)",
-    "background": "#9acd32",
-    "color": "#2f4f4f",
-    "items":
-    [
-      {
-        "start": 100000000,
-        "end": 15000000000,
+        "start": -700000000000,
+        "end": 1600000000000,
         "label": "Sun"
       }
     ]

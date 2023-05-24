@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-//import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 import '../menu/menu_data.dart';
 import 'distance.dart';
 import 'entry.dart';
@@ -68,11 +68,11 @@ class DistanceRenderWidget extends LeafRenderObjectWidget {
 /// are actually drawn to screen.
 class DistanceRenderObject extends RenderBox {
   static const List<Color> lineColors = [
-    Color.fromARGB(255, 125, 195, 184),
-    Color.fromARGB(255, 190, 224, 146),
-    Color.fromARGB(255, 238, 155, 75),
-    Color.fromARGB(255, 202, 79, 63),
-    Color.fromARGB(255, 128, 28, 15)
+    Color.fromARGB(200, 125, 195, 184),
+    Color.fromARGB(200, 190, 224, 146),
+    Color.fromARGB(200, 238, 155, 75),
+    Color.fromARGB(200, 202, 79, 63),
+    Color.fromARGB(200, 128, 28, 15)
   ];
 
   double _topOverlap = 0.0;
@@ -256,8 +256,9 @@ class DistanceRenderObject extends RenderBox {
     if (_distance.nextEntry != null && _distance.nextEntryOpacity > 0.0) {
       double x = offset.dx + _distance.gutterWidth - Distance.GutterLeft;
       double opacity = _distance.nextEntryOpacity;
-      Color color = Color.fromRGBO(69, 211, 197, opacity);
-      //double pageSize = (_distance.renderEnd - _distance.renderStart);
+      //Color color = Color.fromRGBO(69, 211, 197, opacity);//下ボタンの色だけ変わった
+      Color color = Color.fromRGBO(154, 205, 50, opacity);
+      double pageSize = (_distance.renderEnd - _distance.renderStart);
       double pageReference = _distance.renderEnd;
 
       /// Use a Paragraph to draw the arrow's label and page scrolls on canvas:
@@ -268,7 +269,7 @@ class DistanceRenderObject extends RenderBox {
       /// 5. Draw the Paragraph at the right offset.
       const double MaxLabelWidth = 1200.0;
       ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
-          textAlign: TextAlign.start, /*fontFamily: "Roboto",*/ fontSize: 20.0))
+          textAlign: TextAlign.start, fontSize: 20.0))
         ..pushStyle(ui.TextStyle(color: color));
 
       builder.addText(_distance.nextEntry.label);
@@ -318,15 +319,14 @@ class DistanceRenderObject extends RenderBox {
 
       builder = ui.ParagraphBuilder(ui.ParagraphStyle(
           textAlign: TextAlign.center,
-          //fontFamily: "Roboto",
           fontSize: 14.0,
           height: 1.3))
         ..pushStyle(ui.TextStyle(color: color));
 
       double timeUntil = _distance.nextEntry.start - pageReference;
-      //double pages = timeUntil / pageSize;
-      //NumberFormat formatter = NumberFormat.compact();
-      //String pagesFormatted = formatter.format(pages);
+      double pages = timeUntil / pageSize;
+      NumberFormat formatter = NumberFormat.compact();
+      String pagesFormatted = formatter.format(pages);
       //String until = "in ${DistanceEntry.formatDistance(timeUntil).toLowerCase()}\n($pagesFormatted page scrolls)";
       String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
       builder.addText(until);
@@ -348,8 +348,9 @@ class DistanceRenderObject extends RenderBox {
     if (_distance.prevEntry != null && _distance.prevEntryOpacity > 0.0) {
       double x = offset.dx + _distance.gutterWidth - Distance.GutterLeft;
       double opacity = _distance.prevEntryOpacity;
-      Color color = Color.fromRGBO(69, 211, 197, opacity);
-      //double pageSize = (_distance.renderEnd - _distance.renderStart);
+      //Color color = Color.fromRGBO(69, 211, 197, opacity);//↑ボタンの色が変わった
+      Color color = Color.fromRGBO(154, 205, 50, opacity);
+      double pageSize = (_distance.renderEnd - _distance.renderStart);
       double pageReference = _distance.renderEnd;
 
       const double MaxLabelWidth = 1200.0;
@@ -383,7 +384,9 @@ class DistanceRenderObject extends RenderBox {
           labelX - radius, y - radius, radius * 2.0, radius * 2.0));
       Path path = Path();
       double arrowSize = 6.0;
+      //double arrowSize = 0.0; //これで↑ボタンの矢印が消える
       double arrowOffset = 1.0;
+      //double arrowOffset = 0.0;
       path.moveTo(
           x + size.width / 2.0 - arrowSize, y + arrowSize / 2.0 + arrowOffset);
       path.lineTo(x + size.width / 2.0, y - arrowSize / 2.0 + arrowOffset);
@@ -405,9 +408,9 @@ class DistanceRenderObject extends RenderBox {
         ..pushStyle(ui.TextStyle(color: color));
 
       double timeUntil = _distance.prevEntry.start - pageReference;
-      //double pages = timeUntil / pageSize;
-      //NumberFormat formatter = NumberFormat.compact();
-      //String pagesFormatted = formatter.format(pages.abs());
+      double pages = timeUntil / pageSize;
+      NumberFormat formatter = NumberFormat.compact();
+      String pagesFormatted = formatter.format(pages.abs());
       //String until = "${DistanceEntry.formatDistance(timeUntil).toLowerCase()}\n($pagesFormatted page scrolls)";
       String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
       builder.addText(until);
@@ -473,7 +476,7 @@ class DistanceRenderObject extends RenderBox {
 
       /// Use [ui.ParagraphBuilder] to construct the label for canvas.
       ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
-          textAlign: TextAlign.start, /*fontFamily: "Roboto",*/ fontSize: 20.0))
+          textAlign: TextAlign.start, fontSize: 20.0))
         ..pushStyle(
             ui.TextStyle(color: const Color.fromRGBO(255, 255, 255, 1.0)));
 
@@ -522,8 +525,8 @@ class DistanceRenderObject extends RenderBox {
   /// Given a width and a height, design a path for the bubble that lies behind events' labels
   /// on the distance, and return it.
   Path makeBubblePath(double width, double height) {
-    const double ArrowSize = 19.0;
-    const double CornerRadius = 10.0;
+    //const double ArrowSize = 0.0;
+    const double CornerRadius = 20.0;
 
     const double circularConstant = 0.55;
     const double icircularConstant = 1.0 - circularConstant;
@@ -546,9 +549,9 @@ class DistanceRenderObject extends RenderBox {
     path.cubicTo(CornerRadius * icircularConstant, height, 0.0,
         height - CornerRadius * icircularConstant, 0.0, height - CornerRadius);
 
-    path.lineTo(0.0, height / 2.0 + ArrowSize / 2.0);
+  /*  path.lineTo(0.0, height / 2.0 + ArrowSize / 2.0);
     path.lineTo(-ArrowSize / 2.0, height / 2.0);
-    path.lineTo(0.0, height / 2.0 - ArrowSize / 2.0);
+    path.lineTo(0.0, height / 2.0 - ArrowSize / 2.0);*/
 
     path.lineTo(0.0, CornerRadius);
 

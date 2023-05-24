@@ -91,6 +91,7 @@ class DistanceEntry {
   }
 
   /// Pretty-printing for the entry position.
+  /// 前のobjectまでの距離を表示
   String formatFarAway() {
     if (start > 0) {
       return start.round().toString();
@@ -105,6 +106,7 @@ class DistanceEntry {
   }
 
   /// Helper method.
+  /// object間の距離を算出
   static String formatDistance(double start) {
     String label;
     int valueAbs = start.round().abs();

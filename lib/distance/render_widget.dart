@@ -350,8 +350,8 @@ class DistanceRenderObject extends RenderBox {
       double opacity = _distance.prevEntryOpacity;
       //Color color = Color.fromRGBO(69, 211, 197, opacity);//↑ボタンの色が変わった
       Color color = Color.fromRGBO(154, 205, 50, opacity);
-      double pageSize = (_distance.renderEnd - _distance.renderStart);
-      double pageReference = _distance.renderEnd;
+      //double pageSize = (_distance.renderEnd - _distance.renderStart);
+      //double pageReference = _distance.renderEnd;
 
       const double MaxLabelWidth = 1200.0;
       ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
@@ -407,13 +407,13 @@ class DistanceRenderObject extends RenderBox {
           height: 1.3))
         ..pushStyle(ui.TextStyle(color: color));
 
-      double timeUntil = _distance.prevEntry.start - pageReference;
-      double pages = timeUntil / pageSize;
+      //double timeUntil = _distance.prevEntry.start - pageReference;
+      //double pages = timeUntil / pageSize;
       NumberFormat formatter = NumberFormat.compact();
-      String pagesFormatted = formatter.format(pages.abs());
+      //String pagesFormatted = formatter.format(pages.abs());
       //String until = "${DistanceEntry.formatDistance(timeUntil).toLowerCase()}\n($pagesFormatted page scrolls)";
-      String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
-      builder.addText(until);
+      //String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
+      //builder.addText(until);
       labelParagraph = builder.build();
       labelParagraph.layout(ui.ParagraphConstraints(width: size.width));
       canvas.drawParagraph(labelParagraph, Offset(x, y));

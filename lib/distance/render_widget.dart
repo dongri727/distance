@@ -270,12 +270,12 @@ class DistanceRenderObject extends RenderBox {
       /// 5. Draw the Paragraph at the right offset.
       const double MaxLabelWidth = 1200.0;
       ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
-          textAlign: TextAlign.start, fontSize: 20.0))
+          textAlign: TextAlign.start, fontSize: 15.0))
         ..pushStyle(ui.TextStyle(color: color));
 
       builder.addText(_distance.nextEntry.label);
       ui.Paragraph labelParagraph = builder.build();
-      labelParagraph.layout(ui.ParagraphConstraints(width: MaxLabelWidth));
+      labelParagraph.layout(const ui.ParagraphConstraints(width: MaxLabelWidth));
 
       double y = offset.dy + size.height - 200.0;
       double labelX =
@@ -346,17 +346,18 @@ class DistanceRenderObject extends RenderBox {
     }
 
     /// Repeat the same procedure as above for the arrow pointing to the previous event on the distance.
+    /// ↑ボタン
     if (_distance.prevEntry != null && _distance.prevEntryOpacity > 0.0) {
       double x = offset.dx + _distance.gutterWidth - Distance.GutterLeft;
       double opacity = _distance.prevEntryOpacity;
       //Color color = Color.fromRGBO(69, 211, 197, opacity);//↑ボタンの色が変わった
       Color color = Color.fromRGBO(154, 205, 50, opacity);
-      //double pageSize = (_distance.renderEnd - _distance.renderStart);
-      //double pageReference = _distance.renderEnd;
+      double pageSize = (_distance.renderEnd - _distance.renderStart);
+      double pageReference = _distance.renderEnd;
 
       const double MaxLabelWidth = 1200.0;
       ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
-          textAlign: TextAlign.start, /*fontFamily: "Roboto",*/ fontSize: 20.0))
+          textAlign: TextAlign.start, fontSize: 15.0))
         ..pushStyle(ui.TextStyle(color: color));
 
       builder.addText(_distance.prevEntry.label);
@@ -403,18 +404,17 @@ class DistanceRenderObject extends RenderBox {
 
       builder = ui.ParagraphBuilder(ui.ParagraphStyle(
           textAlign: TextAlign.center,
-          //fontFamily: "Roboto",
           fontSize: 14.0,
           height: 1.3))
         ..pushStyle(ui.TextStyle(color: color));
 
-      //double timeUntil = _distance.prevEntry.start - pageReference;
-      //double pages = timeUntil / pageSize;
+      double timeUntil = _distance.prevEntry.start - pageReference;
+      double pages = timeUntil / pageSize;
       NumberFormat formatter = NumberFormat.compact();
-      //String pagesFormatted = formatter.format(pages.abs());
+      String pagesFormatted = formatter.format(pages.abs());
       //String until = "${DistanceEntry.formatDistance(timeUntil).toLowerCase()}\n($pagesFormatted page scrolls)";
-      //String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
-      //builder.addText(until);
+      String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
+      builder.addText(until);
       labelParagraph = builder.build();
       labelParagraph.layout(ui.ParagraphConstraints(width: size.width));
       canvas.drawParagraph(labelParagraph, Offset(x, y));
@@ -477,7 +477,7 @@ class DistanceRenderObject extends RenderBox {
 
       /// Use [ui.ParagraphBuilder] to construct the label for canvas.
       ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
-          textAlign: TextAlign.start, fontSize: 20.0))
+          textAlign: TextAlign.start, fontSize: 15.0))
         ..pushStyle(
             ui.TextStyle(color: const Color.fromRGBO(255, 255, 255, 1.0)));
 
@@ -527,7 +527,7 @@ class DistanceRenderObject extends RenderBox {
   /// on the distance, and return it.
   Path makeBubblePath(double width, double height) {
     //const double ArrowSize = 0.0;
-    const double CornerRadius = 20.0;
+    const double CornerRadius = 10.0;
 
     const double circularConstant = 0.55;
     const double icircularConstant = 1.0 - circularConstant;

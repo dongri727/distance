@@ -23,9 +23,9 @@ class Distance {
   static const double GutterLeft = 45.0;//Space to the left of the scale
   static const double EdgeRadius = 4.0;
   static const double MinChildLength = 50.0;
-  static const double BubbleHeight = 50.0;
-  static const double BubblePadding = 10.0;
-  static const double BubbleTextHeight = 20.0;
+  static const double BubbleHeight = 30.0;
+  static const double BubblePadding = 5.0;
+  static const double BubbleTextHeight = 15.0;
   static const double Parallax = 100.0;
   //static const double AssetScreenScale = 0.3;
   static const double InitialViewportPadding = 100.0;

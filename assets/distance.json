@@ -1,5 +1,25 @@
 [
   {
+    "point": -43486500000000,
+    "label": "Neptune"
+  },
+  {
+    "point": -27213900000000,
+    "label": "Uranus"
+  },
+  {
+    "point": -12770700000000,
+    "label": "Saturn"
+  },
+  {
+    "point": -6287300000000,
+    "label": "Jupiter"
+  },
+  {
+    "point": -3500000000000,
+    "label": "Asteroid Belt"
+  },
+  {
     "point": -546000000000,
     "label": "Mars"
   },

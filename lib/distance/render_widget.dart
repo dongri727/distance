@@ -10,6 +10,7 @@ import 'utils.dart';
 
 /// These two callbacks are used to detect if a bubble or an entry have been tapped.
 /// If that's the case, [ArticlePage] will be pushed onto the [Navigator] stack.
+/// どちらのページにも遷移する必要はないが、無効化すると前後ボタンが効かなくなる。
 typedef TouchBubbleCallback(TapTarget bubble);
 typedef TouchEntryCallback(DistanceEntry entry);
 

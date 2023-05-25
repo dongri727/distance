@@ -6,9 +6,29 @@
     "items":
     [
       {
+        "start": -200000,
+        "end": 5000,
+        "label": "Land"
+      },
+      {
+        "start": -20000000,
+        "end": 70000000,
+        "label": "Earth"
+      },
+      {
+        "start": -5000000000,
+        "end": 500000000,
+        "label": "Moon"
+      },
+      {
         "start": -700000000000,
         "end": 1600000000000,
-        "label": "Sun"
+        "label": "Terrestrial Planets"
+      },
+      {
+        "start": -50000000000000,
+        "end": 1600000000000,
+        "label": "Solar System"
       }
     ]
   }

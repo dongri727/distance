@@ -107,6 +107,30 @@ class DistanceEntry {
 
   /// Helper method.
   /// object間の距離を算出
+  /// メモリ表示の十分の一でメートル単位　メモリ表示との不一致がキモチワルイ
+/*  static String formatDistance(double start) {
+    String label;
+    int valueAbs = start.round().abs();
+    if (valueAbs > 1000000000) {
+      double v = (valueAbs / 100000000.0).floorToDouble() / 10.0;
+
+      label = "${(valueAbs / 10000000000)
+          .toStringAsFixed(v == v.floorToDouble() ? 0 : 1)} Billion";
+    } else if (valueAbs > 1000000) {
+      double v = (valueAbs / 100000.0).floorToDouble() / 10.0;
+      label =
+          "${(valueAbs / 10000000).toStringAsFixed(v == v.floorToDouble() ? 0 : 1)} Million";
+    } else if (valueAbs > 10000) // N.B. < 10,000
+        {
+      double v = (valueAbs / 100.0).floorToDouble() / 10.0;
+      label =
+          "${(valueAbs / 10000).toStringAsFixed(v == v.floorToDouble() ? 0 : 1)} Thousand";
+    } else {
+      label = (valueAbs / 10).toStringAsFixed(0);
+    }
+    return "$label metres";
+  }*/
+  ///メモリ表示と等しい10cm単位
   static String formatDistance(double start) {
     String label;
     int valueAbs = start.round().abs();
@@ -118,12 +142,12 @@ class DistanceEntry {
     } else if (valueAbs > 1000000) {
       double v = (valueAbs / 100000.0).floorToDouble() / 10.0;
       label =
-          "${(valueAbs / 1000000).toStringAsFixed(v == v.floorToDouble() ? 0 : 1)} Million";
+      "${(valueAbs / 1000000).toStringAsFixed(v == v.floorToDouble() ? 0 : 1)} Million";
     } else if (valueAbs > 10000) // N.B. < 10,000
         {
       double v = (valueAbs / 100.0).floorToDouble() / 10.0;
       label =
-          "${(valueAbs / 1000).toStringAsFixed(v == v.floorToDouble() ? 0 : 1)} Thousand";
+      "${(valueAbs / 1000).toStringAsFixed(v == v.floorToDouble() ? 0 : 1)} Thousand";
     } else {
       label = valueAbs.toStringAsFixed(0);
     }

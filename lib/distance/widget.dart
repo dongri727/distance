@@ -114,7 +114,7 @@ class DistanceWidgetState extends State<DistanceWidget> {
             top: topOverlap +
                 devicePadding.top +
                 target.padTop +
-                Distance.Parallax,
+                Distance.parallax,
             bottom: target.padBottom);
         distance.setViewport(
             start: target.start, end: target.end, animate: true, pad: true);
@@ -135,7 +135,7 @@ class DistanceWidgetState extends State<DistanceWidget> {
           top: topOverlap +
               devicePadding.top +
               target.padTop +
-              Distance.Parallax,
+              Distance.parallax,
           bottom: target.padBottom);
       distance.setViewport(
           start: target.start, end: target.end, animate: true, pad: true);

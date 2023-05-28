@@ -13,26 +13,25 @@ typedef ChangeHeaderColorCallback = Function(Color background, Color text);
 
 class Distance {
   /// Some aptly named constants for properly aligning the Distance view.
-  static const double LineWidth = 2.0;
-  static const double LineSpacing = 10.0;
-  static const double DepthOffset = LineSpacing + LineWidth;
-  static const double EdgePadding = 8.0;
-  static const double MoveSpeed = 10.0;
-  static const double MoveSpeedInteracting = 40.0;
-  static const double Deceleration = 3.0;
-  static const double GutterLeft = 45.0;//Space to the left of the scale
-  static const double EdgeRadius = 4.0;
-  static const double MinChildLength = 50.0;
-  static const double BubbleHeight = 30.0;
-  static const double BubblePadding = 5.0;
-  static const double BubbleTextHeight = 15.0;
-  static const double Parallax = 100.0;
-  //static const double AssetScreenScale = 0.3;
-  static const double InitialViewportPadding = 100.0;
-  static const double TravelViewportPaddingTop = 400.0;
-  static const double ViewportPaddingTop = 120.0;
-  static const double ViewportPaddingBottom = 100.0;
-  static const int SteadyMilliseconds = 500;
+  static const double lineWidth = 2.0;
+  static const double lineSpacing = 10.0;
+  static const double depthOffset = lineSpacing + lineWidth;
+  static const double edgePadding = 8.0;
+  static const double moveSpeed = 10.0;
+  static const double moveSpeedInteracting = 40.0;
+  static const double deceleration = 3.0;
+  static const double gutterLeft = 45.0;//Space to the left of the scale
+  static const double edgeRadius = 4.0;
+  static const double minChildLength = 50.0;
+  static const double bubblesHeight = 30.0;
+  static const double bubblePadding = 5.0;
+  static const double bubbleTextHeight = 15.0;
+  static const double parallax = 100.0;
+  static const double initialViewportPadding = 100.0;
+  static const double travelViewportPaddingTop = 400.0;
+  static const double viewportPaddingTop = 120.0;
+  static const double viewportPaddingBottom = 100.0;
+  static const int steadyMilliseconds = 500;
 
   /// The current platform is initialized at boot, to properly initialize
   /// [ScrollPhysics] based on the platform we're on.
@@ -51,7 +50,6 @@ class Distance {
   double _renderOffsetDepth = 0.0;
   double _labelX = 0.0;
   double _renderLabelX = 0.0;
-  //double _lastAssetY = 0.0;
   double _prevEntryOpacity = 0.0;
   double _distanceToPrevEntry = 0.0;
   double _nextEntryOpacity = 0.0;
@@ -59,9 +57,8 @@ class Distance {
   double _simulationTime = 0.0;
   double _timeMin = 0.0;
   double _timeMax = 0.0;
-  final double _gutterWidth = GutterLeft;
+  final double _gutterWidth = gutterLeft;
 
-  //bool _showFavorites = false;
   bool _isFrameScheduled = false;
   bool _isInteracting = false;
   bool _isScaling = false;
@@ -110,11 +107,6 @@ class Distance {
 
   /// All the [DistanceEntry]s that are loaded from disk at boot (in [loadFromBundle()]).
   List<DistanceEntry> _entries;
-
-/*  //イラストのanimation関連
-  /// The list of [DistanceAsset], also loaded from disk at boot.
-  //List<DistanceAsset> _renderAssets;
-  //Map<String, DistanceEntry> _entriesById = Map<String, DistanceEntry>();*/
 
   /// Callback set by [DistanceRenderWidget] when adding a reference to this object.
   /// It'll trigger [RenderBox.markNeedsPaint()].
@@ -192,7 +184,7 @@ class Distance {
 
     if (isIt) {
       /// If another timer is still needed, recreate it.
-      _steadyTimer = Timer(const Duration(milliseconds: SteadyMilliseconds), () {
+      _steadyTimer = Timer(const Duration(milliseconds: steadyMilliseconds), () {
         _steadyTimer = null;
         _isSteady = true;
         _startRendering();
@@ -370,13 +362,6 @@ class Distance {
           distanceEntry.label = map["label"] as String;
         }
 
-/*        /// Some entries will also have an id
-        if (map.containsKey("id")) {
-          distanceEntry.id = map["id"] as String;
-          _entriesById[distanceEntry.id] = distanceEntry;
-        }*/
-
-
         /// Add this entry to the list.
         allEntries.add(distanceEntry);
       }
@@ -427,9 +412,6 @@ class Distance {
       }
       if (parent != null) {
         entry.parent = parent;
-/*        if (parent.children == null) {
-          parent.children = [];
-        }*/
         parent.children ??= [];
         parent.children.add(entry);
       } else {
@@ -440,11 +422,6 @@ class Distance {
     return allEntries;
   }
 
-/*  /// Helper function for [MenuVignette].
-  DistanceEntry getById(String id) {
-    return _entriesById[id];
-  }*/
-
   /// Make sure that while scrolling we're within the correct distance bounds.
   clampScroll() {
     _scrollMetrics = null;
@@ -453,8 +430,8 @@ class Distance {
 
     /// Get measurements values for the current viewport.
     double scale = computeScale(_start, _end);
-    double padTop = (devicePadding.top + ViewportPaddingTop) / scale;
-    double padBottom = (devicePadding.bottom + ViewportPaddingBottom) / scale;
+    double padTop = (devicePadding.top + viewportPaddingTop) / scale;
+    double padBottom = (devicePadding.bottom + viewportPaddingBottom) / scale;
     bool fixStart = _start < _timeMin - padTop;
     bool fixEnd = _end > _timeMax + padBottom;
 
@@ -463,8 +440,8 @@ class Distance {
     /// so we do it in steps approaching the correct answer.
     for (int i = 0; i < 20; i++) {
       double scale = computeScale(_start, _end);
-      double padTop = (devicePadding.top + ViewportPaddingTop) / scale;
-      double padBottom = (devicePadding.bottom + ViewportPaddingBottom) / scale;
+      double padTop = (devicePadding.top + viewportPaddingTop) / scale;
+      double padBottom = (devicePadding.bottom + viewportPaddingBottom) / scale;
       if (fixStart) {
         _start = _timeMin - padTop;
       }
@@ -494,7 +471,7 @@ class Distance {
         bool animate = false}) {
     /// Calculate the current height.
     if (height != double.maxFinite) {
-      if (_height == 0.0 && _entries != null && _entries.length > 0) {
+      if (_height == 0.0 && _entries != null && _entries.isNotEmpty) {
         double scale = height / (_end - _start);
         _start = _start - padding.top / scale;
         _end = _end + padding.bottom / scale;
@@ -529,8 +506,8 @@ class Distance {
     if (velocity != double.maxFinite) {
       double scale = computeScale(_start, _end);
       double padTop =
-          (devicePadding.top + ViewportPaddingTop) / computeScale(_start, _end);
-      double padBottom = (devicePadding.bottom + ViewportPaddingBottom) /
+          (devicePadding.top + viewportPaddingTop) / computeScale(_start, _end);
+      double padBottom = (devicePadding.bottom + viewportPaddingBottom) /
           computeScale(_start, _end);
       double rangeMin = (_timeMin - padTop) * scale;
       double rangeMax = (_timeMax + padBottom) * scale - _height;
@@ -660,7 +637,7 @@ class Distance {
 
     /// Animate movement.
     double speed =
-    min(1.0, elapsed * (_isInteracting ? MoveSpeedInteracting : MoveSpeed));
+    min(1.0, elapsed * (_isInteracting ? moveSpeedInteracting : moveSpeed));
     double ds = _start - _renderStart;
     double de = _end - _renderEnd;
 
@@ -689,7 +666,7 @@ class Distance {
         lastStart = color.start;
       }
     }
-    if (_headerColors != null && _headerColors.length > 0) {
+    if (_headerColors != null && _headerColors.isNotEmpty) {
       double lastStart = _headerColors.first.start;
       for (HeaderColors color in _headerColors) {
         color.screenY =
@@ -744,7 +721,7 @@ class Distance {
     if (_entries != null) {
       /// Advance the items hierarchy one level at a time.
       if (_advanceItems(
-          _entries, _gutterWidth + LineSpacing, scale, elapsed, animate, 0)) {
+          _entries, _gutterWidth + lineSpacing, scale, elapsed, animate, 0)) {
         doneRendering = false;
       }
     }
@@ -809,7 +786,7 @@ class Distance {
 
     if (_isSteady) {
       double dd = _offsetDepth - renderOffsetDepth;
-      if (!animate || dd.abs() * DepthOffset < 1.0) {
+      if (!animate || dd.abs() * depthOffset < 1.0) {
         _renderOffsetDepth = _offsetDepth;
       } else {
         /// Needs a second run.
@@ -823,8 +800,7 @@ class Distance {
 
   ///吹き出しサイズ
   double bubbleHeight(DistanceEntry entry) {
-    return BubblePadding * 2.0 + entry.lineCount * BubbleTextHeight;
-    //return 50;
+    return bubblePadding * 2.0 + entry.lineCount * bubbleTextHeight;
   }
 
   /// Advance entry [assets] with the current [elapsed] time.
@@ -843,8 +819,8 @@ class Distance {
       double y = start * scale;
 
       ///+pad;
-      if (i > 0 && y - lastEnd < EdgePadding) {
-        y = lastEnd + EdgePadding;
+      if (i > 0 && y - lastEnd < edgePadding) {
+        y = lastEnd + edgePadding;
       }
 
       /// Adjust based on current scale value.
@@ -859,7 +835,7 @@ class Distance {
       /// Calculate the best location for the bubble/label.
       double targetLabelY = y;
       double itemBubbleHeight = bubbleHeight(item);
-      double fadeAnimationStart = itemBubbleHeight + BubblePadding / 2.0;
+      double fadeAnimationStart = itemBubbleHeight + bubblePadding / 2.0;
       if (targetLabelY - _lastEntryY < fadeAnimationStart
 
           /// The best location for our label is occluded, lets see if we can bump it forward...
@@ -897,7 +873,7 @@ class Distance {
       item.y = y;
       item.endY = endY;
 
-      double targetLegOpacity = item.length > EdgeRadius ? 1.0 : 0.0;
+      double targetLegOpacity = item.length > edgeRadius ? 1.0 : 0.0;
       double dtl = targetLegOpacity - item.legOpacity;
       if (!animate || dtl.abs() < 0.01) {
         item.legOpacity = targetLegOpacity;
@@ -907,7 +883,7 @@ class Distance {
       }
 
       double targetItemOpacity = item.parent != null
-          ? item.parent.length < MinChildLength ||
+          ? item.parent.length < minChildLength ||
           (item.parent != null && item.parent.endY < y)
           ? 0.0
           : y > item.parent.y
@@ -977,14 +953,14 @@ class Distance {
         item.labelY = y;
       }
 
-      double lx = x + LineSpacing + LineSpacing;
+      double lx = x + lineSpacing + lineSpacing;
       if (lx > _labelX) {
         _labelX = lx;
       }
 
       if (item.children != null && item.isVisible) {
         /// Advance the rest of the hierarchy.
-        if (_advanceItems(item.children, x + LineSpacing + LineWidth, scale,
+        if (_advanceItems(item.children, x + lineSpacing + lineWidth, scale,
             elapsed, animate, depth + 1)) {
           stillAnimating = true;
         }

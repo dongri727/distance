@@ -11,14 +11,14 @@ class Ticks {
   /// The following `const` variables are used to properly align, pad and layout the ticks
   /// on the left side of the distance.
   /// lowerCamelに直すと、別変数と被る
-  static const double Margin = 20.0;
-  static const double Width = 40.0;
-  static const double LabelPadLeft = 5.0;
-  static const double LabelPadRight = 1.0;
-  static const int TickDistance = 16;
-  static const int TextTickDistance = 64;
-  static const double TickSize = 15.0;
-  static const double SmallTickSize = 5.0;
+  static const double margin = 20.0;
+  static const double width = 40.0;
+  static const double labelPadLeft = 5.0;
+  static const double labelPadRight = 1.0;
+  static const int ticksDistance = 16;
+  static const int textsTickDistance = 64;
+  static const double tickSize = 15.0;
+  static const double smallTickSize = 5.0;
 
   /// Other than providing the [PaintingContext] to allow the ticks to paint themselves,
   /// other relevant sizing information is passed to this `paint()` method, as well as
@@ -28,8 +28,8 @@ class Ticks {
     final Canvas canvas = context.canvas;
 
     double bottom = height;
-    double tickDistance = TickDistance.toDouble();
-    double textTickDistance = TextTickDistance.toDouble();
+    double tickDistance = ticksDistance.toDouble();
+    double textTickDistance = textsTickDistance.toDouble();
 
     /// The width of the left panel can expand and contract if the favorites-view is activated,
     /// by pressing the button on the top-right corner of the distance.
@@ -38,14 +38,14 @@ class Ticks {
 
     /// Calculate spacing based on current scale
     double scaledTickDistance = tickDistance * scale;
-    if (scaledTickDistance > 2 * TickDistance) {
-      while (scaledTickDistance > 2 * TickDistance && tickDistance >= 2.0) {
+    if (scaledTickDistance > 2 * ticksDistance) {
+      while (scaledTickDistance > 2 * ticksDistance && tickDistance >= 2.0) {
         scaledTickDistance /= 2.0;
         tickDistance /= 2.0;
         textTickDistance /= 2.0;
       }
     } else {
-      while (scaledTickDistance < TickDistance) {
+      while (scaledTickDistance < ticksDistance) {
         scaledTickDistance *= 2.0;
         tickDistance *= 2.0;
         textTickDistance *= 2.0;
@@ -54,7 +54,7 @@ class Ticks {
 
     /// The number of ticks to draw.
     int numTicks = (height / scaledTickDistance).ceil() + 2;
-    if (scaledTickDistance > TextTickDistance) {
+    if (scaledTickDistance > textsTickDistance) {
       textTickDistance = tickDistance;
     }
 
@@ -131,8 +131,8 @@ class Ticks {
       if (tt % textTickDistance == 0) {
         /// Every `textTickDistance`, draw a wider tick with the a label laid on top.
         canvas.drawRect(
-            Rect.fromLTWH(offset.dx + gutterWidth - TickSize,
-                offset.dy + height - o, TickSize, 1.0),
+            Rect.fromLTWH(offset.dx + gutterWidth - tickSize,
+                offset.dy + height - o, tickSize, 1.0),
             Paint()..color = colors.long);
 
         /// Drawing text to [canvas] is done by using the [ParagraphBuilder] directly.
@@ -159,16 +159,16 @@ class Ticks {
         builder.addText(label);
         ui.Paragraph tickParagraph = builder.build();
         tickParagraph.layout(ui.ParagraphConstraints(
-            width: gutterWidth - LabelPadLeft - LabelPadRight));
+            width: gutterWidth - labelPadLeft - labelPadRight));
         canvas.drawParagraph(
             tickParagraph,
-            Offset(offset.dx + LabelPadLeft - LabelPadRight,
+            Offset(offset.dx + labelPadLeft - labelPadRight,
                 offset.dy + height - o - tickParagraph.height - 5));
       } else {
         /// If we're within two text-ticks, just draw a smaller line.
         canvas.drawRect(
-            Rect.fromLTWH(offset.dx + gutterWidth - SmallTickSize,
-                offset.dy + height - o, SmallTickSize, 1.0),
+            Rect.fromLTWH(offset.dx + gutterWidth - smallTickSize,
+                offset.dy + height - o, smallTickSize, 1.0),
             Paint()..color = colors.short);
       }
       startingTickMarkValue += tickDistance;

@@ -134,7 +134,7 @@ class DistanceRenderObject extends RenderBox {
     /// Adjust the current distance padding and consequently the viewport.
     if (_focusItem.pad) {
       distance.padding = EdgeInsets.only(
-          top: topOverlap + _focusItem.padTop + Distance.Parallax,
+          top: topOverlap + _focusItem.padTop + Distance.parallax,
           bottom: _focusItem.padBottom);
       distance.setViewport(
           start: _focusItem.start,
@@ -189,7 +189,6 @@ class DistanceRenderObject extends RenderBox {
     /// Fetch the background colors from the [Distance] and compute the fill.
     List<DistanceBackgroundColor> backgroundColors = distance.backgroundColors;
     ui.Paint backgroundPaint;
-    //if (backgroundColors != null && backgroundColors.length > 0) {
     if (backgroundColors != null && backgroundColors.isNotEmpty) {
       double rangeStart = backgroundColors.first.start;
       double range = backgroundColors.last.start - backgroundColors.first.start;
@@ -245,8 +244,8 @@ class DistanceRenderObject extends RenderBox {
           offset,
           _distance.entries,
           _distance.gutterWidth +
-              Distance.LineSpacing -
-              Distance.DepthOffset * _distance.renderOffsetDepth,
+              Distance.lineSpacing -
+              Distance.depthOffset * _distance.renderOffsetDepth,
           scale,
           0);
       canvas.restore();
@@ -255,12 +254,11 @@ class DistanceRenderObject extends RenderBox {
     /// After a few moments of inaction on the distance, if there's enough space,
     /// an arrow pointing to the next event on the distance will appear on the bottom of the screen.
     /// Draw it, and add it as another [TapTarget].
+    /// 下向きボタン
     if (_distance.nextEntry != null && _distance.nextEntryOpacity > 0.0) {
-      double x = offset.dx + _distance.gutterWidth - Distance.GutterLeft;
+      double x = offset.dx + _distance.gutterWidth - Distance.gutterLeft;
       double opacity = _distance.nextEntryOpacity;
-      //Color color = Color.fromRGBO(69, 211, 197, opacity);//下ボタンの色だけ変わった
       Color color = Color.fromRGBO(154, 205, 50, opacity);
-      //double pageSize = (_distance.renderEnd - _distance.renderStart);
       double pageReference = _distance.renderEnd;
 
       /// Use a Paragraph to draw the arrow's label and page scrolls on canvas:
@@ -326,10 +324,6 @@ class DistanceRenderObject extends RenderBox {
         ..pushStyle(ui.TextStyle(color: color));
 
       double timeUntil = _distance.nextEntry.start - pageReference;
-      //double pages = timeUntil / pageSize;
-      //NumberFormat formatter = NumberFormat.compact();
-      //String pagesFormatted = formatter.format(pages);
-      //String until = "in ${DistanceEntry.formatDistance(timeUntil).toLowerCase()}\n($pagesFormatted page scrolls)";
       String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
       builder.addText(until);
       labelParagraph = builder.build();
@@ -349,11 +343,9 @@ class DistanceRenderObject extends RenderBox {
     /// Repeat the same procedure as above for the arrow pointing to the previous event on the distance.
     /// ↑ボタン
     if (_distance.prevEntry != null && _distance.prevEntryOpacity > 0.0) {
-      double x = offset.dx + _distance.gutterWidth - Distance.GutterLeft;
+      double x = offset.dx + _distance.gutterWidth - Distance.gutterLeft;
       double opacity = _distance.prevEntryOpacity;
-      //Color color = Color.fromRGBO(69, 211, 197, opacity);//↑ボタンの色が変わった
       Color color = Color.fromRGBO(154, 205, 50, opacity);
-      //double pageSize = (_distance.renderEnd - _distance.renderStart);
       double pageReference = _distance.renderEnd;
 
       const double maxLabelWidth = 1200.0;
@@ -387,9 +379,7 @@ class DistanceRenderObject extends RenderBox {
           labelX - radius, y - radius, radius * 2.0, radius * 2.0));
       Path path = Path();
       double arrowSize = 6.0;
-      //double arrowSize = 0.0; //これで↑ボタンの矢印が消える
       double arrowOffset = 1.0;
-      //double arrowOffset = 0.0;
       path.moveTo(
           x + size.width / 2.0 - arrowSize, y + arrowSize / 2.0 + arrowOffset);
       path.lineTo(x + size.width / 2.0, y - arrowSize / 2.0 + arrowOffset);
@@ -410,10 +400,6 @@ class DistanceRenderObject extends RenderBox {
         ..pushStyle(ui.TextStyle(color: color));
 
       double timeUntil = _distance.prevEntry.start - pageReference;
-      //double pages = timeUntil / pageSize;
-      //NumberFormat formatter = NumberFormat.compact();
-      //String pagesFormatted = formatter.format(pages.abs());
-      //String until = "${DistanceEntry.formatDistance(timeUntil).toLowerCase()}\n($pagesFormatted page scrolls)";
       String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
       builder.addText(until);
       labelParagraph = builder.build();
@@ -439,19 +425,19 @@ class DistanceRenderObject extends RenderBox {
 
     for (DistanceEntry item in entries) {
       if (!item.isVisible ||
-          item.y > size.height + Distance.BubbleHeight ||
-          item.endY < -Distance.BubbleHeight) {
+          item.y > size.height + Distance.bubblesHeight ||
+          item.endY < -Distance.bubblesHeight) {
         /// Don't paint this item.
         continue;
       }
 
       double legOpacity = item.legOpacity * item.opacity;
-      Offset entryOffset = Offset(x + Distance.LineWidth / 2.0, item.y);
+      Offset entryOffset = Offset(x + Distance.lineWidth / 2.0, item.y);
 
       /// Draw the small circle on the left side of the distance.
       canvas.drawCircle(
           entryOffset,
-          Distance.EdgeRadius,
+          Distance.edgeRadius,
           Paint()
             ..color = (item.accent ?? lineColors[depth % lineColors.length])
                 .withOpacity(item.opacity));
@@ -462,11 +448,11 @@ class DistanceRenderObject extends RenderBox {
 
         /// Draw the line connecting the start&point of this item on the distance.
         canvas.drawRect(
-            Offset(x, item.y) & Size(Distance.LineWidth, item.length),
+            Offset(x, item.y) & Size(Distance.lineWidth, item.length),
             legPaint);
         canvas.drawCircle(
-            Offset(x + Distance.LineWidth / 2.0, item.y + item.length),
-            Distance.EdgeRadius,
+            Offset(x + Distance.lineWidth / 2.0, item.y + item.length),
+            Distance.edgeRadius,
             legPaint);
       }
 
@@ -489,7 +475,7 @@ class DistanceRenderObject extends RenderBox {
       double textWidth =
           labelParagraph.maxIntrinsicWidth * item.opacity * item.labelOpacity;
       double bubbleX = _distance.renderLabelX -
-          Distance.DepthOffset * _distance.renderOffsetDepth;
+          Distance.depthOffset * _distance.renderOffsetDepth;
       double bubbleY = item.labelY - bubbleHeight / 2.0;
 
       canvas.save();
@@ -518,7 +504,7 @@ class DistanceRenderObject extends RenderBox {
       canvas.restore();
       if (item.children != null) {
         /// Draw the other elements in the hierarchy.
-        drawItems(context, offset, item.children, x + Distance.DepthOffset,
+        drawItems(context, offset, item.children, x + Distance.depthOffset,
             scale, depth + 1);
       }
     }
@@ -527,7 +513,7 @@ class DistanceRenderObject extends RenderBox {
   /// Given a width and a height, design a path for the bubble that lies behind events' labels
   /// on the distance, and return it.
   Path makeBubblePath(double width, double height) {
-    //const double ArrowSize = 0.0;
+    //const double ArrowSize = 0.0; //吹き出しの矢印
     const double cornerRadius = 10.0;
 
     const double circularConstant = 0.55;

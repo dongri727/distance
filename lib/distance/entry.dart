@@ -13,7 +13,6 @@ class DistanceAsset {
   double scaleVelocity = 0.0;
   double y = 0.0;
   double velocity = 0.0;
-  //String filename;
   DistanceEntry entry;
 }
 
@@ -60,13 +59,9 @@ class DistanceEntry {
   double labelOpacity = 0.0;
   double targetLabelOpacity = 0.0;
   double delayLabel = 0.0;
-  //double targetAssetOpacity = 0.0;
-  //double delayAsset = 0.0;
   double legOpacity = 0.0;
   double labelY = 0.0;
   double labelVelocity = 0.0;
-
-  //DistanceAsset asset;
 
   bool get isVisible {
     return opacity > 0.0;
@@ -107,29 +102,6 @@ class DistanceEntry {
 
   /// Helper method.
   /// object間の距離を算出
-  /// メモリ表示の十分の一でメートル単位　メモリ表示との不一致がキモチワルイ
-/*  static String formatDistance(double start) {
-    String label;
-    int valueAbs = start.round().abs();
-    if (valueAbs > 1000000000) {
-      double v = (valueAbs / 100000000.0).floorToDouble() / 10.0;
-
-      label = "${(valueAbs / 10000000000)
-          .toStringAsFixed(v == v.floorToDouble() ? 0 : 1)} Billion";
-    } else if (valueAbs > 1000000) {
-      double v = (valueAbs / 100000.0).floorToDouble() / 10.0;
-      label =
-          "${(valueAbs / 10000000).toStringAsFixed(v == v.floorToDouble() ? 0 : 1)} Million";
-    } else if (valueAbs > 10000) // N.B. < 10,000
-        {
-      double v = (valueAbs / 100.0).floorToDouble() / 10.0;
-      label =
-          "${(valueAbs / 10000).toStringAsFixed(v == v.floorToDouble() ? 0 : 1)} Thousand";
-    } else {
-      label = (valueAbs / 10).toStringAsFixed(0);
-    }
-    return "$label metres";
-  }*/
   ///メモリ表示と等しい10cm単位
   static String formatDistance(double start) {
     String label;

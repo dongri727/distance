@@ -10,10 +10,10 @@ class MainMenuWidget extends StatefulWidget {
   const MainMenuWidget({Key key}) : super(key: key);
 
   @override
-  _MainMenuWidgetState createState() => _MainMenuWidgetState();
+  MainMenuWidgetState createState() => MainMenuWidgetState();
 }
 
-class _MainMenuWidgetState extends State<MainMenuWidget> {
+class MainMenuWidgetState extends State<MainMenuWidget> {
 
   /// [MenuData] is a wrapper object for the data of each Card section.
   /// This data is loaded from the asset bundle during [initState()]

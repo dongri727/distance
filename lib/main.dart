@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'bloc_provider.dart';
-import 'color.dart';
 import 'menu/menu.dart';
-
 
 
 /// The app is wrapped by a [BlocProvider]. This allows the child widgets
 /// to access other components throughout the hierarchy without the need
 /// to pass those references around.
 class MyApp extends StatelessWidget {
+  const MyApp({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -35,8 +35,8 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: null, body: MainMenuWidget());
+    return const Scaffold(appBar: null, body: MainMenuWidget());
   }
 }
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());

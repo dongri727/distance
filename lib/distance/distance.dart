@@ -59,7 +59,7 @@ class Distance {
   double _simulationTime = 0.0;
   double _timeMin = 0.0;
   double _timeMax = 0.0;
-  double _gutterWidth = GutterLeft;
+  final double _gutterWidth = GutterLeft;
 
   //bool _showFavorites = false;
   bool _isFrameScheduled = false;
@@ -427,9 +427,10 @@ class Distance {
       }
       if (parent != null) {
         entry.parent = parent;
-        if (parent.children == null) {
+/*        if (parent.children == null) {
           parent.children = [];
-        }
+        }*/
+        parent.children ??= [];
         parent.children.add(entry);
       } else {
         /// no parent, so this is a root entry.

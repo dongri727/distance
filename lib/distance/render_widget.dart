@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 import '../menu/menu_data.dart';
 import 'distance.dart';
 import 'entry.dart';
@@ -11,8 +11,8 @@ import 'utils.dart';
 /// These two callbacks are used to detect if a bubble or an entry have been tapped.
 /// If that's the case, [ArticlePage] will be pushed onto the [Navigator] stack.
 /// どちらのページにも遷移する必要はないが、無効化すると前後ボタンが効かなくなる。
-typedef TouchBubbleCallback(TapTarget bubble);
-typedef TouchEntryCallback(DistanceEntry entry);
+typedef TouchBubbleCallback = Function(TapTarget bubble);
+typedef TouchEntryCallback = Function(DistanceEntry entry);
 
 /// This couples with [DistanceRenderObject].
 ///
@@ -77,11 +77,11 @@ class DistanceRenderObject extends RenderBox {
   ];
 
   double _topOverlap = 0.0;
-  Ticks _ticks = Ticks();
+  final Ticks _ticks = Ticks();
   Distance _distance;
   MenuItemData _focusItem;
   MenuItemData _processedFocusItem;
-  List<TapTarget> _tapTargets = [];
+  final List<TapTarget> _tapTargets = [];
   TouchBubbleCallback touchBubble;
   TouchEntryCallback touchEntry;
 
@@ -189,7 +189,8 @@ class DistanceRenderObject extends RenderBox {
     /// Fetch the background colors from the [Distance] and compute the fill.
     List<DistanceBackgroundColor> backgroundColors = distance.backgroundColors;
     ui.Paint backgroundPaint;
-    if (backgroundColors != null && backgroundColors.length > 0) {
+    //if (backgroundColors != null && backgroundColors.length > 0) {
+    if (backgroundColors != null && backgroundColors.isNotEmpty) {
       double rangeStart = backgroundColors.first.start;
       double range = backgroundColors.last.start - backgroundColors.first.start;
       List<ui.Color> colors = <ui.Color>[];
@@ -259,7 +260,7 @@ class DistanceRenderObject extends RenderBox {
       double opacity = _distance.nextEntryOpacity;
       //Color color = Color.fromRGBO(69, 211, 197, opacity);//下ボタンの色だけ変わった
       Color color = Color.fromRGBO(154, 205, 50, opacity);
-      double pageSize = (_distance.renderEnd - _distance.renderStart);
+      //double pageSize = (_distance.renderEnd - _distance.renderStart);
       double pageReference = _distance.renderEnd;
 
       /// Use a Paragraph to draw the arrow's label and page scrolls on canvas:
@@ -268,14 +269,14 @@ class DistanceRenderObject extends RenderBox {
       /// 3. Build the [Paragraph];
       /// 4. Lay out the text with custom [ParagraphConstraints].
       /// 5. Draw the Paragraph at the right offset.
-      const double MaxLabelWidth = 1200.0;
+      const double maxLabelWidth = 1200.0;
       ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
           textAlign: TextAlign.start, fontSize: 15.0))
         ..pushStyle(ui.TextStyle(color: color));
 
       builder.addText(_distance.nextEntry.label);
       ui.Paragraph labelParagraph = builder.build();
-      labelParagraph.layout(const ui.ParagraphConstraints(width: MaxLabelWidth));
+      labelParagraph.layout(const ui.ParagraphConstraints(width: maxLabelWidth));
 
       double y = offset.dy + size.height - 200.0;
       double labelX =
@@ -325,9 +326,9 @@ class DistanceRenderObject extends RenderBox {
         ..pushStyle(ui.TextStyle(color: color));
 
       double timeUntil = _distance.nextEntry.start - pageReference;
-      double pages = timeUntil / pageSize;
-      NumberFormat formatter = NumberFormat.compact();
-      String pagesFormatted = formatter.format(pages);
+      //double pages = timeUntil / pageSize;
+      //NumberFormat formatter = NumberFormat.compact();
+      //String pagesFormatted = formatter.format(pages);
       //String until = "in ${DistanceEntry.formatDistance(timeUntil).toLowerCase()}\n($pagesFormatted page scrolls)";
       String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
       builder.addText(until);
@@ -352,17 +353,17 @@ class DistanceRenderObject extends RenderBox {
       double opacity = _distance.prevEntryOpacity;
       //Color color = Color.fromRGBO(69, 211, 197, opacity);//↑ボタンの色が変わった
       Color color = Color.fromRGBO(154, 205, 50, opacity);
-      double pageSize = (_distance.renderEnd - _distance.renderStart);
+      //double pageSize = (_distance.renderEnd - _distance.renderStart);
       double pageReference = _distance.renderEnd;
 
-      const double MaxLabelWidth = 1200.0;
+      const double maxLabelWidth = 1200.0;
       ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
           textAlign: TextAlign.start, fontSize: 15.0))
         ..pushStyle(ui.TextStyle(color: color));
 
       builder.addText(_distance.prevEntry.label);
       ui.Paragraph labelParagraph = builder.build();
-      labelParagraph.layout(const ui.ParagraphConstraints(width: MaxLabelWidth));
+      labelParagraph.layout(const ui.ParagraphConstraints(width: maxLabelWidth));
 
       double y = offset.dy + topOverlap + 20.0;
       double labelX =
@@ -409,9 +410,9 @@ class DistanceRenderObject extends RenderBox {
         ..pushStyle(ui.TextStyle(color: color));
 
       double timeUntil = _distance.prevEntry.start - pageReference;
-      double pages = timeUntil / pageSize;
-      NumberFormat formatter = NumberFormat.compact();
-      String pagesFormatted = formatter.format(pages.abs());
+      //double pages = timeUntil / pageSize;
+      //NumberFormat formatter = NumberFormat.compact();
+      //String pagesFormatted = formatter.format(pages.abs());
       //String until = "${DistanceEntry.formatDistance(timeUntil).toLowerCase()}\n($pagesFormatted page scrolls)";
       String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
       builder.addText(until);
@@ -469,8 +470,8 @@ class DistanceRenderObject extends RenderBox {
             legPaint);
       }
 
-      const double MaxLabelWidth = 1200.0;
-      const double BubblePadding = 20.0;
+      const double maxLabelWidth = 1200.0;
+      const double bubblePadding = 20.0;
 
       /// Let the distance calculate the height for the current item's bubble.
       double bubbleHeight = distance.bubbleHeight(item);
@@ -483,7 +484,7 @@ class DistanceRenderObject extends RenderBox {
 
       builder.addText(item.label);
       ui.Paragraph labelParagraph = builder.build();
-      labelParagraph.layout(const ui.ParagraphConstraints(width: MaxLabelWidth));
+      labelParagraph.layout(const ui.ParagraphConstraints(width: maxLabelWidth));
 
       double textWidth =
           labelParagraph.maxIntrinsicWidth * item.opacity * item.labelOpacity;
@@ -496,7 +497,7 @@ class DistanceRenderObject extends RenderBox {
 
       /// Get the bubble's path based on its width&height, draw it, and then add the label on top.
       Path bubble =
-      makeBubblePath(textWidth + BubblePadding * 2.0, bubbleHeight);
+      makeBubblePath(textWidth + bubblePadding * 2.0, bubbleHeight);
 
       canvas.drawPath(
           bubble,
@@ -504,16 +505,16 @@ class DistanceRenderObject extends RenderBox {
             ..color = (item.accent ?? lineColors[depth % lineColors.length])
                 .withOpacity(item.opacity * item.labelOpacity));
       canvas
-          .clipRect(Rect.fromLTWH(BubblePadding, 0.0, textWidth, bubbleHeight));
+          .clipRect(Rect.fromLTWH(bubblePadding, 0.0, textWidth, bubbleHeight));
       _tapTargets.add(TapTarget()
         ..entry = item
         ..rect = Rect.fromLTWH(
-            bubbleX, bubbleY, textWidth + BubblePadding * 2.0, bubbleHeight));
+            bubbleX, bubbleY, textWidth + bubblePadding * 2.0, bubbleHeight));
 
       canvas.drawParagraph(
           labelParagraph,
           Offset(
-              BubblePadding, bubbleHeight / 2.0 - labelParagraph.height / 2.0));
+              bubblePadding, bubbleHeight / 2.0 - labelParagraph.height / 2.0));
       canvas.restore();
       if (item.children != null) {
         /// Draw the other elements in the hierarchy.
@@ -527,37 +528,37 @@ class DistanceRenderObject extends RenderBox {
   /// on the distance, and return it.
   Path makeBubblePath(double width, double height) {
     //const double ArrowSize = 0.0;
-    const double CornerRadius = 10.0;
+    const double cornerRadius = 10.0;
 
     const double circularConstant = 0.55;
     const double icircularConstant = 1.0 - circularConstant;
 
     Path path = Path();
 
-    path.moveTo(CornerRadius, 0.0);
-    path.lineTo(width - CornerRadius, 0.0);
-    path.cubicTo(width - CornerRadius + CornerRadius * circularConstant, 0.0,
-        width, CornerRadius * icircularConstant, width, CornerRadius);
-    path.lineTo(width, height - CornerRadius);
+    path.moveTo(cornerRadius, 0.0);
+    path.lineTo(width - cornerRadius, 0.0);
+    path.cubicTo(width - cornerRadius + cornerRadius * circularConstant, 0.0,
+        width, cornerRadius * icircularConstant, width, cornerRadius);
+    path.lineTo(width, height - cornerRadius);
     path.cubicTo(
         width,
-        height - CornerRadius + CornerRadius * circularConstant,
-        width - CornerRadius * icircularConstant,
+        height - cornerRadius + cornerRadius * circularConstant,
+        width - cornerRadius * icircularConstant,
         height,
-        width - CornerRadius,
+        width - cornerRadius,
         height);
-    path.lineTo(CornerRadius, height);
-    path.cubicTo(CornerRadius * icircularConstant, height, 0.0,
-        height - CornerRadius * icircularConstant, 0.0, height - CornerRadius);
+    path.lineTo(cornerRadius, height);
+    path.cubicTo(cornerRadius * icircularConstant, height, 0.0,
+        height - cornerRadius * icircularConstant, 0.0, height - cornerRadius);
 
   /*  path.lineTo(0.0, height / 2.0 + ArrowSize / 2.0);
     path.lineTo(-ArrowSize / 2.0, height / 2.0);
     path.lineTo(0.0, height / 2.0 - ArrowSize / 2.0);*/
 
-    path.lineTo(0.0, CornerRadius);
+    path.lineTo(0.0, cornerRadius);
 
-    path.cubicTo(0.0, CornerRadius * icircularConstant,
-        CornerRadius * icircularConstant, 0.0, CornerRadius, 0.0);
+    path.cubicTo(0.0, cornerRadius * icircularConstant,
+        cornerRadius * icircularConstant, 0.0, cornerRadius, 0.0);
 
     path.close();
 

@@ -7,8 +7,8 @@ import 'render_widget.dart';
 import '../color.dart';
 
 
-typedef ShowMenuCallback();
-typedef SelectItemCallback(DistanceEntry item);
+typedef ShowMenuCallback = Function();
+typedef SelectItemCallback = Function(DistanceEntry item);
 
 /// This is the Stateful Widget associated with the Distance object.
 /// It is built from a [focusItem], that is the event the [Distance] should
@@ -19,10 +19,10 @@ class DistanceWidget extends StatefulWidget {
   const DistanceWidget(this.focusItem, this.distance, {Key key}) : super(key: key);
 
   @override
-  _DistanceWidgetState createState() => _DistanceWidgetState();
+  DistanceWidgetState createState() => DistanceWidgetState();
 }
 
-class _DistanceWidgetState extends State<DistanceWidget> {
+class DistanceWidgetState extends State<DistanceWidget> {
   static const String defaultPositionName = "Distance";
   static const double topOverlap = 56.0;
 
@@ -193,7 +193,8 @@ class _DistanceWidgetState extends State<DistanceWidget> {
       };
       setState(() {
         _positionName =
-        distance.currentPosition != null ? distance.currentPosition : defaultPositionName;
+        //distance.currentPosition != null ? distance.currentPosition : defaultPositionName;
+        distance.currentPosition ?? defaultPositionName;
       });
     }
   }
@@ -243,29 +244,33 @@ class _DistanceWidgetState extends State<DistanceWidget> {
                 children: <Widget>[
                   Container(
                       height: devicePadding.top,
-                      color: _headerBackgroundColor != null
+                      /*color: _headerBackgroundColor != null
                           ? _headerBackgroundColor
-                          : Color.fromRGBO(238, 240, 242, 0.81)),
+                          : Color.fromRGBO(238, 240, 242, 0.81)*/
+                      color: _headerBackgroundColor ?? const Color.fromRGBO(238, 240, 242, 0.81)
+                  ),
                   Container(
-                      color: _headerBackgroundColor != null
+                     /* color: _headerBackgroundColor != null
                           ? _headerBackgroundColor
-                          : Color.fromRGBO(238, 240, 242, 0.81),
+                          : Color.fromRGBO(238, 240, 242, 0.81),*/
+                      color: _headerBackgroundColor ?? const Color.fromRGBO(238, 240, 242, 0.81),
                       height: 56.0,
                       width: double.infinity,
                       child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             IconButton(
-                              padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                              color: _headerTextColor != null
+                              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+/*                              color: _headerTextColor != null
                                   ? _headerTextColor
-                                  : Colors.black.withOpacity(0.5),
+                                  : Colors.black.withOpacity(0.5),*/
+                              color: _headerTextColor ?? Colors.black.withOpacity(0.5),
                               alignment: Alignment.centerLeft,
-                              icon: Icon(Icons.arrow_back),
+                              icon: const Icon(Icons.arrow_back),
                               onPressed: () {
                                 widget.distance.isActive = false;
                                 Navigator.of(context).pop();
-                                return true;
+                                //return true;
                               },
                             ),
                             Text(
@@ -274,10 +279,13 @@ class _DistanceWidgetState extends State<DistanceWidget> {
                               style: TextStyle(
                                   //fontFamily: "RobotoMedium",
                                   fontSize: 20.0,
-                                  color: _headerTextColor != null
+/*                                  color: _headerTextColor != null
                                       ? _headerTextColor
                                       : darkText.withOpacity(
-                                      darkText.opacity * 0.75)),
+                                      darkText.opacity * 0.75)*/
+                                  color: _headerTextColor ?? darkText.withOpacity(
+                                      darkText.opacity * 0.75)
+                              ),
                             ),
                           ]))
                 ])

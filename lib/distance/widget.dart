@@ -6,7 +6,6 @@ import 'utils.dart';
 import 'render_widget.dart';
 import '../color.dart';
 
-
 typedef ShowMenuCallback = Function();
 typedef SelectItemCallback = Function(DistanceEntry item);
 
@@ -16,7 +15,7 @@ typedef SelectItemCallback = Function(DistanceEntry item);
 class DistanceWidget extends StatefulWidget {
   final MenuItemData focusItem;
   final Distance distance;
-  const DistanceWidget(this.focusItem, this.distance, {Key key}) : super(key: key);
+  const DistanceWidget(this.focusItem, this.distance, {Key? key}) : super(key: key);
 
   @override
   DistanceWidgetState createState() => DistanceWidgetState();
@@ -28,24 +27,24 @@ class DistanceWidgetState extends State<DistanceWidget> {
 
   /// These variables are used to calculate the correct viewport for the distance
   /// when performing a scaling operation as in [_scaleStart], [_scaleUpdate], [_scaleEnd].
-  Offset _lastFocalPoint;
+  late Offset _lastFocalPoint;
   double _scaleStartYearStart = -100.0;
   double _scaleStartYearEnd = 100.0;
 
   /// When touching a bubble on the [Distance] keep track of which
   /// element has been touched in order to move to the [article_widget].
-  TapTarget _touchedBubble;
-  DistanceEntry _touchedEntry;
+  TapTarget? _touchedBubble;
+  DistanceEntry? _touchedEntry;
 
   /// Which position the Distance is currently focused on.
   /// Defaults to [DefaultPositionName].
-  String _positionName;
+  String? _positionName;
 
   /// Syntactic-sugar-getter.
   Distance get distance => widget.distance;
 
-  Color _headerTextColor;
-  Color _headerBackgroundColor;
+  Color? _headerTextColor;
+  Color? _headerBackgroundColor;
 
 
   /// The following three functions define are the callbacks used by the
@@ -65,7 +64,7 @@ class DistanceWidgetState extends State<DistanceWidget> {
   void _scaleUpdate(ScaleUpdateDetails details) {
     double changeScale = details.scale;
     double scale =
-        (_scaleStartYearEnd - _scaleStartYearStart) / context.size.height;
+        (_scaleStartYearEnd - _scaleStartYearStart) / context.size!.height;
 
     double focus = _scaleStartYearStart + details.focalPoint.dy * scale;
     double focalDiff =
@@ -73,7 +72,7 @@ class DistanceWidgetState extends State<DistanceWidget> {
     distance.setViewport(
         start: focus + (_scaleStartYearStart - focus) / changeScale + focalDiff,
         end: focus + (_scaleStartYearEnd - focus) / changeScale + focalDiff,
-        height: context.size.height,
+        height: context.size!.height,
         animate: true);
   }
 
@@ -107,8 +106,8 @@ class DistanceWidgetState extends State<DistanceWidget> {
   void _tapUp(TapUpDetails details) {
     EdgeInsets devicePadding = MediaQuery.of(context).padding;
     if (_touchedBubble != null) {
-      if (_touchedBubble.zoom) {
-        MenuItemData target = MenuItemData.fromEntry(_touchedBubble.entry);
+      if (_touchedBubble!.zoom) {
+        MenuItemData target = MenuItemData.fromEntry(_touchedBubble!.entry);
 
         distance.padding = EdgeInsets.only(
             top: topOverlap +
@@ -129,7 +128,7 @@ class DistanceWidgetState extends State<DistanceWidget> {
   void _longPress() {
     EdgeInsets devicePadding = MediaQuery.of(context).padding;
     if (_touchedBubble != null) {
-      MenuItemData target = MenuItemData.fromEntry(_touchedBubble.entry);
+      MenuItemData target = MenuItemData.fromEntry(_touchedBubble!.entry);
 
       distance.padding = EdgeInsets.only(
           top: topOverlap +
@@ -148,7 +147,7 @@ class DistanceWidgetState extends State<DistanceWidget> {
     if (distance != null) {
       widget.distance.isActive = true;
       _positionName = distance.currentPosition != null
-          ? distance.currentPosition.label
+          ? distance.currentPosition!.label
           : defaultPositionName;
       distance.onHeaderColorsChanged = (Color background, Color text) {
         setState(() {
@@ -176,7 +175,7 @@ class DistanceWidgetState extends State<DistanceWidget> {
 
     if (distance != oldWidget.distance && distance != null) {
       setState(() {
-        _headerTextColor = distance.headerTextColor;
+        _headerTextColor = distance.headerTextColor!;
         _headerBackgroundColor = distance.headerBackgroundColor;
       });
 
@@ -191,11 +190,10 @@ class DistanceWidgetState extends State<DistanceWidget> {
           _positionName = entry != null ? entry.label : defaultPositionName;
         });
       };
-      setState(() {
+/*      setState(() {
         _positionName =
-        //distance.currentPosition != null ? distance.currentPosition : defaultPositionName;
         distance.currentPosition ?? defaultPositionName;
-      });
+      });*/
     }
   }
 
@@ -204,10 +202,10 @@ class DistanceWidgetState extends State<DistanceWidget> {
   @override
   deactivate() {
     super.deactivate();
-    if (distance != null) {
+/*    if (distance != null) {
       distance.onHeaderColorsChanged = null;
       distance.onPositionChanged = null;
-    }
+    }*/
   }
 
   /// This widget is wrapped in a [Scaffold] to have the classic Material Design visual layout structure.
@@ -244,15 +242,9 @@ class DistanceWidgetState extends State<DistanceWidget> {
                 children: <Widget>[
                   Container(
                       height: devicePadding.top,
-                      /*color: _headerBackgroundColor != null
-                          ? _headerBackgroundColor
-                          : Color.fromRGBO(238, 240, 242, 0.81)*/
                       color: _headerBackgroundColor ?? const Color.fromRGBO(238, 240, 242, 0.81)
                   ),
                   Container(
-                     /* color: _headerBackgroundColor != null
-                          ? _headerBackgroundColor
-                          : Color.fromRGBO(238, 240, 242, 0.81),*/
                       color: _headerBackgroundColor ?? const Color.fromRGBO(238, 240, 242, 0.81),
                       height: 56.0,
                       width: double.infinity,
@@ -261,9 +253,6 @@ class DistanceWidgetState extends State<DistanceWidget> {
                           children: <Widget>[
                             IconButton(
                               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-/*                              color: _headerTextColor != null
-                                  ? _headerTextColor
-                                  : Colors.black.withOpacity(0.5),*/
                               color: _headerTextColor ?? Colors.black.withOpacity(0.5),
                               alignment: Alignment.centerLeft,
                               icon: const Icon(Icons.arrow_back),
@@ -274,15 +263,10 @@ class DistanceWidgetState extends State<DistanceWidget> {
                               },
                             ),
                             Text(
-                              _positionName,
+                              _positionName!,
                               textAlign: TextAlign.left,
                               style: TextStyle(
-                                  //fontFamily: "RobotoMedium",
                                   fontSize: 20.0,
-/*                                  color: _headerTextColor != null
-                                      ? _headerTextColor
-                                      : darkText.withOpacity(
-                                      darkText.opacity * 0.75)*/
                                   color: _headerTextColor ?? darkText.withOpacity(
                                       darkText.opacity * 0.75)
                               ),

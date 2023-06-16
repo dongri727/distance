@@ -7,7 +7,7 @@ import 'menu_section.dart';
 /// The Base Page of the Distance App.
 /// the card-sections for accessing the main events on the Distance,
 class MainMenuWidget extends StatefulWidget {
-  const MainMenuWidget({Key key}) : super(key: key);
+  const MainMenuWidget({Key? key}) : super(key: key);
 
   @override
   MainMenuWidgetState createState() => MainMenuWidgetState();

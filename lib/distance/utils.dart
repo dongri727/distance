@@ -37,28 +37,28 @@ Color interpolateColor(Color from, Color to, double elapsed) {
 }
 
 class DistanceBackgroundColor {
-  Color color;
-  double start;
+  late Color color;
+  late double start;
 }
 
 class TickColors {
-  Color background;
-  Color long;
-  Color short;
-  Color text;
-  double start;
-  double screenY;
+  late Color background;
+  late Color long;
+  late Color short;
+  late Color text;
+  late double start;
+  late double screenY;
 }
 
 class HeaderColors {
-  Color background;
-  Color text;
-  double start;
-  double screenY;
+  late Color background;
+  late Color text;
+  late double start;
+  late double screenY;
 }
 
 class TapTarget {
-  DistanceEntry entry;
-  Rect rect;
+  late DistanceEntry entry;
+  late Rect rect;
   bool zoom = false;
 }

@@ -39,8 +39,8 @@ class Distance {
 
   double _start = 0.0;
   double _end = 0.0;
-  double _renderStart;
-  double _renderEnd;
+  double _renderStart = 0.0;
+  double _renderEnd = 0.0;
   double _lastFrameTime = 0.0;
   double _height = 0.0;
   double _firstOnScreenEntryY = 0.0;
@@ -65,58 +65,58 @@ class Distance {
   bool _isActive = false;
   bool _isSteady = false;
 
-  HeaderColors _currentHeaderColors;
-  Color _headerTextColor;
-  Color _headerBackgroundColor;
+  HeaderColors? _currentHeaderColors;
+  Color? _headerTextColor;
+  Color? _headerBackgroundColor;
 
   /// Depending on the current [Platform], different values are initialized
   /// so that they behave properly on iOS&Android.
-  ScrollPhysics _scrollPhysics;
+  ScrollPhysics? _scrollPhysics;
 
   /// [_scrollPhysics] needs a [ScrollMetrics] value to function.
-  ScrollMetrics _scrollMetrics;
-  Simulation _scrollSimulation;
+  ScrollMetrics? _scrollMetrics;
+  Simulation? _scrollSimulation;
 
   EdgeInsets padding = EdgeInsets.zero;
   EdgeInsets devicePadding = EdgeInsets.zero;
 
-  Timer _steadyTimer;
+  Timer? _steadyTimer;
 
   /// Through these two references, the Distance can access the position and update
   /// the top label accordingly.
-  DistanceEntry _currentPosition;
-  DistanceEntry _lastPosition;
+  DistanceEntry? _currentPosition;
+  DistanceEntry? _lastPosition;
 
   ///前の事象次の事象Button
   /// These references allow to maintain a reference to the next and previous elements
   /// of the Distance, depending on which elements are currently in focus.
   /// When there's enough space on the top/bottom, the Distance will render a round button
   /// with an arrow to link to the next/previous element.
-  DistanceEntry _nextEntry;
-  DistanceEntry _renderNextEntry;
-  DistanceEntry _prevEntry;
-  DistanceEntry _renderPrevEntry;
+  DistanceEntry? _nextEntry;
+  DistanceEntry? _renderNextEntry;
+  DistanceEntry? _prevEntry;
+  DistanceEntry? _renderPrevEntry;
 
   /// A gradient is shown on the background, depending on the [_currentPosition] we're in.
   /// グラデーション
-  List<DistanceBackgroundColor> _backgroundColors;
+  List<DistanceBackgroundColor> _backgroundColors = [];
 
   /// [Ticks] also have custom colors so that they are always visible with the changing background.
-  List<TickColors> _tickColors;
-  List<HeaderColors> _headerColors;
+  List<TickColors> _tickColors = [];
+  List<HeaderColors> _headerColors = [];
 
   /// All the [DistanceEntry]s that are loaded from disk at boot (in [loadFromBundle()]).
-  List<DistanceEntry> _entries;
+  List<DistanceEntry> _entries = [];
 
   /// Callback set by [DistanceRenderWidget] when adding a reference to this object.
   /// It'll trigger [RenderBox.markNeedsPaint()].
-  PaintCallback onNeedPaint;
+  PaintCallback? onNeedPaint;
 
   /// These next two callbacks are bound to set the state of the [DistanceWidget]
   /// so it can change the appearance of the top AppBar.
   /// appBarの領域表示
-  ChangePositionCallback onPositionChanged;
-  ChangeHeaderColorCallback onHeaderColorsChanged;
+  ChangePositionCallback? onPositionChanged;
+  ChangeHeaderColorCallback? onHeaderColorsChanged;
 
   Distance(this._platform) {
     setViewport(start: 1536.0, end: 3072.0);
@@ -133,16 +133,15 @@ class Distance {
   double get prevEntryOpacity => _prevEntryOpacity;
   bool get isInteracting => _isInteracting;
   bool get isActive => _isActive;
-  Color get headerTextColor => _headerTextColor;
-  Color get headerBackgroundColor => _headerBackgroundColor;
-  HeaderColors get currentHeaderColors => _currentHeaderColors;
-  DistanceEntry get currentPosition => _currentPosition;
-  DistanceEntry get nextEntry => _renderNextEntry;
-  DistanceEntry get prevEntry => _renderPrevEntry;
+  Color? get headerTextColor => _headerTextColor;
+  Color? get headerBackgroundColor => _headerBackgroundColor;
+  HeaderColors? get currentHeaderColors => _currentHeaderColors;
+  DistanceEntry? get currentPosition => _currentPosition;
+  DistanceEntry? get nextEntry => _renderNextEntry;
+  DistanceEntry? get prevEntry => _renderPrevEntry;
   List<DistanceEntry> get entries => _entries;
   List<DistanceBackgroundColor> get backgroundColors => _backgroundColors;
   List<TickColors> get tickColors => _tickColors;
-
 
   /// When a scale operation is detected, this setter is called:
   /// e.g. [_DistanceWidgetState.scaleStart()].
@@ -178,7 +177,7 @@ class Distance {
 
     /// If a timer is currently active, dispose it.
     if (_steadyTimer != null) {
-      _steadyTimer.cancel();
+      _steadyTimer!.cancel();
       _steadyTimer = null;
     }
 
@@ -384,7 +383,7 @@ class Distance {
     _entries = [];
 
     /// Build up hierarchy (Position are grouped into "Spanning Position" and Events are placed into the Position they belong to).
-    DistanceEntry previous;
+    DistanceEntry? previous;
     for (DistanceEntry entry in allEntries) {
       if (entry.start < _timeMin) {
         _timeMin = entry.start;
@@ -398,7 +397,7 @@ class Distance {
       entry.previous = previous;
       previous = entry;
 
-      DistanceEntry parent;
+      DistanceEntry? parent;
       double minDistance = double.maxFinite;
       for (DistanceEntry checkEntry in allEntries) {
         if (checkEntry.type == DistanceEntryType.position) {
@@ -424,9 +423,9 @@ class Distance {
 
   /// Make sure that while scrolling we're within the correct distance bounds.
   clampScroll() {
-    _scrollMetrics = null;
-    _scrollPhysics = null;
-    _scrollSimulation = null;
+    _scrollMetrics;
+    _scrollPhysics;
+    _scrollSimulation;
 
     /// Get measurements values for the current viewport.
     double scale = computeScale(_start, _end);
@@ -526,17 +525,17 @@ class Distance {
           maxScrollExtent: double.infinity,
           pixels: 0.0,
           viewportDimension: _height,
-          axisDirection: AxisDirection.down);
+          axisDirection: AxisDirection.down, devicePixelRatio: 0.0);
 
       _scrollSimulation =
-          _scrollPhysics.createBallisticSimulation(_scrollMetrics, velocity);
+          _scrollPhysics?.createBallisticSimulation(_scrollMetrics!, velocity)!;
     }
     if (!animate) {
       _renderStart = start;
       _renderEnd = end;
       advance(0.0, false);
       if (onNeedPaint != null) {
-        onNeedPaint();
+        onNeedPaint!();
       }
     } else if (!_isFrameScheduled) {
       _isFrameScheduled = true;
@@ -567,11 +566,11 @@ class Distance {
     }
 
     if (onNeedPaint != null) {
-      onNeedPaint();
+      onNeedPaint!();
     }
   }
 
-  TickColors findTickColors(double screen) {
+  TickColors? findTickColors(double screen) {
     if (_tickColors == null) {
       return null;
     }
@@ -586,7 +585,7 @@ class Distance {
         : _tickColors.last;
   }
 
-  HeaderColors _findHeaderColors(double screen) {
+  HeaderColors? _findHeaderColors(double screen) {
     if (_headerColors == null) {
       return null;
     }
@@ -619,7 +618,7 @@ class Distance {
       doneRendering = false;
       _simulationTime += elapsed;
       double scale = _height / (_end - _start);
-      double velocity = _scrollSimulation.dx(_simulationTime);
+      double velocity = _scrollSimulation!.dx(_simulationTime);
 
       double displace = velocity * elapsed / scale;
 
@@ -627,13 +626,12 @@ class Distance {
       _end -= displace;
 
       /// If scrolling has terminated, clean up the resources.
-      if (_scrollSimulation.isDone(_simulationTime)) {
-        _scrollMetrics = null;
-        _scrollPhysics = null;
-        _scrollSimulation = null;
+      if (_scrollSimulation!.isDone(_simulationTime)) {
+        _scrollMetrics;
+        _scrollPhysics;
+        _scrollSimulation;
       }
     }
-
 
     /// Animate movement.
     double speed =
@@ -676,16 +674,16 @@ class Distance {
       }
     }
 
-    _currentHeaderColors = _findHeaderColors(0.0);
+    _currentHeaderColors = _findHeaderColors(0.0)!;
 
     if (_currentHeaderColors != null) {
       if (_headerTextColor == null) {
-        _headerTextColor = _currentHeaderColors.text;
-        _headerBackgroundColor = _currentHeaderColors.background;
+        _headerTextColor = _currentHeaderColors!.text;
+        _headerBackgroundColor = _currentHeaderColors!.background;
       } else {
         bool stillColoring = false;
         Color headerTextColor = interpolateColor(
-            _headerTextColor, _currentHeaderColors.text, elapsed);
+            _headerTextColor!, _currentHeaderColors!.text, elapsed);
 
         if (headerTextColor != _headerTextColor) {
           _headerTextColor = headerTextColor;
@@ -693,7 +691,7 @@ class Distance {
           doneRendering = false;
         }
         Color headerBackgroundColor = interpolateColor(
-            _headerBackgroundColor, _currentHeaderColors.background, elapsed);
+            _headerBackgroundColor!, _currentHeaderColors!.background, elapsed);
         if (headerBackgroundColor != _headerBackgroundColor) {
           _headerBackgroundColor = headerBackgroundColor;
           stillColoring = true;
@@ -701,7 +699,7 @@ class Distance {
         }
         if (stillColoring) {
           if (onHeaderColorsChanged != null) {
-            onHeaderColorsChanged(_headerBackgroundColor, _headerTextColor);
+            onHeaderColorsChanged!(_headerBackgroundColor!, _headerTextColor!);
           }
         }
       }
@@ -780,7 +778,7 @@ class Distance {
     if (_currentPosition != _lastPosition) {
       _lastPosition = _currentPosition;
       if (onPositionChanged != null) {
-        onPositionChanged(currentPosition);
+        onPositionChanged!(currentPosition!);
       }
     }
 
@@ -800,7 +798,7 @@ class Distance {
 
   ///吹き出しサイズ
   double bubbleHeight(DistanceEntry entry) {
-    return bubblePadding * 2.0 + entry.lineCount * bubbleTextHeight;
+    return bubblePadding * 2.0 + /*entry.lineCount * */bubbleTextHeight;
   }
 
   /// Advance entry [assets] with the current [elapsed] time.
@@ -853,7 +851,6 @@ class Distance {
       if (targetLabelOpacity > 0.0 && item.targetLabelOpacity != 1.0) {
         item.delayLabel = 0.5;
       }
-
       item.targetLabelOpacity = targetLabelOpacity;
       if (item.delayLabel > 0.0) {
         targetLabelOpacity = 0.0;
@@ -883,10 +880,10 @@ class Distance {
       }
 
       double targetItemOpacity = item.parent != null
-          ? item.parent.length < minChildLength ||
-          (item.parent != null && item.parent.endY < y)
+          ? item.parent!.length < minChildLength ||
+          (item.parent != null && item.parent!.endY < y)
           ? 0.0
-          : y > item.parent.y
+          : y > item.parent!.y
           ? 1.0
           : 0.0
           : 1.0;

@@ -15,7 +15,6 @@ typedef TouchBubbleCallback = Function(TapTarget bubble);
 typedef TouchEntryCallback = Function(DistanceEntry entry);
 
 /// This couples with [DistanceRenderObject].
-///
 /// This widget's fields are accessible from the [RenderBox] so that it can
 /// be aligned with the current state.
 class DistanceRenderWidget extends LeafRenderObjectWidget {
@@ -26,12 +25,12 @@ class DistanceRenderWidget extends LeafRenderObjectWidget {
   final TouchEntryCallback touchEntry;
 
   const DistanceRenderWidget(
-      {Key key,
-        this.focusItem,
-        this.touchBubble,
-        this.touchEntry,
-        this.topOverlap,
-        this.distance,
+      {Key? key,
+        required this.focusItem,
+        required this.touchBubble,
+        required this.touchEntry,
+        required this.topOverlap,
+        required this.distance,
       })
       : super(key: key);
 
@@ -64,7 +63,6 @@ class DistanceRenderWidget extends LeafRenderObjectWidget {
 
 /// A custom renderer is used for the the distance object.
 /// The [Distance] serves as an abstraction layer for the positioning and advancing logic.
-///
 /// The core method of this object is [paint()]: this is where all the elements
 /// are actually drawn to screen.
 class DistanceRenderObject extends RenderBox {
@@ -78,19 +76,19 @@ class DistanceRenderObject extends RenderBox {
 
   double _topOverlap = 0.0;
   final Ticks _ticks = Ticks();
-  Distance _distance;
-  MenuItemData _focusItem;
-  MenuItemData _processedFocusItem;
+  Distance? _distance;
+  MenuItemData? _focusItem;
+  MenuItemData? _processedFocusItem;
   final List<TapTarget> _tapTargets = [];
-  TouchBubbleCallback touchBubble;
-  TouchEntryCallback touchEntry;
+  late TouchBubbleCallback touchBubble;
+  late TouchEntryCallback touchEntry;
 
   @override
   bool get sizedByParent => true;
 
   double get topOverlap => _topOverlap;
-  Distance get distance => _distance;
-  MenuItemData get focusItem => _focusItem;
+  Distance get distance => _distance!;
+  MenuItemData get focusItem => _focusItem!;
 
   set topOverlap(double value) {
     if (_topOverlap == value) {
@@ -108,7 +106,7 @@ class DistanceRenderObject extends RenderBox {
     }
     _distance = value;
     updateFocusItem();
-    _distance.onNeedPaint = markNeedsPaint;
+    _distance?.onNeedPaint = markNeedsPaint;
     markNeedsPaint();
     markNeedsLayout();
   }
@@ -132,19 +130,19 @@ class DistanceRenderObject extends RenderBox {
     }
 
     /// Adjust the current distance padding and consequently the viewport.
-    if (_focusItem.pad) {
+    if (_focusItem!.pad) {
       distance.padding = EdgeInsets.only(
-          top: topOverlap + _focusItem.padTop + Distance.parallax,
-          bottom: _focusItem.padBottom);
+          top: topOverlap + _focusItem!.padTop + Distance.parallax,
+          bottom: _focusItem!.padBottom);
       distance.setViewport(
-          start: _focusItem.start,
-          end: _focusItem.end,
+          start: _focusItem!.start,
+          end: _focusItem!.end,
           animate: true,
           pad: true);
     } else {
       distance.padding = EdgeInsets.zero;
       distance.setViewport(
-          start: _focusItem.start, end: _focusItem.end, animate: true);
+          start: _focusItem!.start, end: _focusItem!.end, animate: true);
     }
     _processedFocusItem = _focusItem;
   }
@@ -152,7 +150,7 @@ class DistanceRenderObject extends RenderBox {
   /// Check if the current tap on the screen has hit a bubble.
   @override
   bool hitTestSelf(Offset screenOffset) {
-    touchEntry(null);
+    //touchEntry(null);
     for (TapTarget bubble in _tapTargets.reversed) {
       if (bubble.rect.contains(screenOffset)) {
         if (touchBubble != null) {
@@ -161,7 +159,7 @@ class DistanceRenderObject extends RenderBox {
         return true;
       }
     }
-    touchBubble(null);
+    //touchBubble(null);
 
     return true;
   }
@@ -175,7 +173,7 @@ class DistanceRenderObject extends RenderBox {
   @override
   void performLayout() {
     if (_distance != null) {
-      _distance.setViewport(height: size.height, animate: true);
+      _distance!.setViewport(height: size.height, animate: true);
     }
   }
 
@@ -222,8 +220,8 @@ class DistanceRenderObject extends RenderBox {
     }
 
     _tapTargets.clear();
-    double renderStart = _distance.renderStart;
-    double renderEnd = _distance.renderEnd;
+    double renderStart = _distance!.renderStart;
+    double renderEnd = _distance!.renderEnd;
     double scale = size.height / (renderEnd - renderStart);
 
     /// Paint the [Ticks] on the left side of the screen.
@@ -235,17 +233,17 @@ class DistanceRenderObject extends RenderBox {
     canvas.restore();
 
     /// And then draw the rest of the distance.
-    if (_distance.entries != null) {
+    if (_distance!.entries != null) {
       canvas.save();
-      canvas.clipRect(Rect.fromLTWH(offset.dx + _distance.gutterWidth,
-          offset.dy, size.width - _distance.gutterWidth, size.height));
+      canvas.clipRect(Rect.fromLTWH(offset.dx + _distance!.gutterWidth,
+          offset.dy, size.width - _distance!.gutterWidth, size.height));
       drawItems(
           context,
           offset,
-          _distance.entries,
-          _distance.gutterWidth +
+          _distance!.entries,
+          _distance!.gutterWidth +
               Distance.lineSpacing -
-              Distance.depthOffset * _distance.renderOffsetDepth,
+              Distance.depthOffset * _distance!.renderOffsetDepth,
           scale,
           0);
       canvas.restore();
@@ -255,11 +253,11 @@ class DistanceRenderObject extends RenderBox {
     /// an arrow pointing to the next event on the distance will appear on the bottom of the screen.
     /// Draw it, and add it as another [TapTarget].
     /// 下向きボタン
-    if (_distance.nextEntry != null && _distance.nextEntryOpacity > 0.0) {
-      double x = offset.dx + _distance.gutterWidth - Distance.gutterLeft;
-      double opacity = _distance.nextEntryOpacity;
+    if (_distance?.nextEntry != null && _distance!.nextEntryOpacity > 0.0) {
+      double x = offset.dx + _distance!.gutterWidth - Distance.gutterLeft;
+      double opacity = _distance!.nextEntryOpacity;
       Color color = Color.fromRGBO(154, 205, 50, opacity);
-      double pageReference = _distance.renderEnd;
+      double pageReference = _distance!.renderEnd;
 
       /// Use a Paragraph to draw the arrow's label and page scrolls on canvas:
       /// 1. Create a [ParagraphBuilder] that'll be initialized with the correct styling information;
@@ -272,7 +270,7 @@ class DistanceRenderObject extends RenderBox {
           textAlign: TextAlign.start, fontSize: 15.0))
         ..pushStyle(ui.TextStyle(color: color));
 
-      builder.addText(_distance.nextEntry.label);
+      builder.addText(_distance!.nextEntry!.label);
       ui.Paragraph labelParagraph = builder.build();
       labelParagraph.layout(const ui.ParagraphConstraints(width: maxLabelWidth));
 
@@ -323,7 +321,7 @@ class DistanceRenderObject extends RenderBox {
           height: 1.3))
         ..pushStyle(ui.TextStyle(color: color));
 
-      double timeUntil = _distance.nextEntry.start - pageReference;
+      double timeUntil = _distance!.nextEntry!.start - pageReference;
       String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
       builder.addText(until);
       labelParagraph = builder.build();
@@ -335,25 +333,25 @@ class DistanceRenderObject extends RenderBox {
 
       /// Add this to the list of *tappable* elements.
       _tapTargets.add(TapTarget()
-        ..entry = _distance.nextEntry
+        ..entry = _distance!.nextEntry!
         ..rect = nextEntryRect
         ..zoom = true);
     }
 
     /// Repeat the same procedure as above for the arrow pointing to the previous event on the distance.
     /// ↑ボタン
-    if (_distance.prevEntry != null && _distance.prevEntryOpacity > 0.0) {
-      double x = offset.dx + _distance.gutterWidth - Distance.gutterLeft;
-      double opacity = _distance.prevEntryOpacity;
+    if (_distance?.prevEntry != null && _distance!.prevEntryOpacity > 0.0) {
+      double x = offset.dx + _distance!.gutterWidth - Distance.gutterLeft;
+      double opacity = _distance!.prevEntryOpacity;
       Color color = Color.fromRGBO(154, 205, 50, opacity);
-      double pageReference = _distance.renderEnd;
+      double pageReference = _distance!.renderEnd;
 
       const double maxLabelWidth = 1200.0;
       ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
           textAlign: TextAlign.start, fontSize: 15.0))
         ..pushStyle(ui.TextStyle(color: color));
 
-      builder.addText(_distance.prevEntry.label);
+      builder.addText(_distance!.prevEntry!.label);
       ui.Paragraph labelParagraph = builder.build();
       labelParagraph.layout(const ui.ParagraphConstraints(width: maxLabelWidth));
 
@@ -399,7 +397,7 @@ class DistanceRenderObject extends RenderBox {
           height: 1.3))
         ..pushStyle(ui.TextStyle(color: color));
 
-      double timeUntil = _distance.prevEntry.start - pageReference;
+      double timeUntil = _distance!.prevEntry!.start - pageReference;
       String until = DistanceEntry.formatDistance(timeUntil).toLowerCase();
       builder.addText(until);
       labelParagraph = builder.build();
@@ -408,7 +406,7 @@ class DistanceRenderObject extends RenderBox {
       y += labelParagraph.height;
 
       _tapTargets.add(TapTarget()
-        ..entry = _distance.prevEntry
+        ..entry = _distance!.prevEntry!
         ..rect = prevEntryRect
         ..zoom = true);
     }
@@ -474,8 +472,8 @@ class DistanceRenderObject extends RenderBox {
 
       double textWidth =
           labelParagraph.maxIntrinsicWidth * item.opacity * item.labelOpacity;
-      double bubbleX = _distance.renderLabelX -
-          Distance.depthOffset * _distance.renderOffsetDepth;
+      double bubbleX = _distance!.renderLabelX -
+          Distance.depthOffset * _distance!.renderOffsetDepth;
       double bubbleY = item.labelY - bubbleHeight / 2.0;
 
       canvas.save();

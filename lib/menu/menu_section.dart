@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 import 'menu_data.dart';
 
 typedef NavigateTo = Function(MenuItemData item);
@@ -21,20 +19,20 @@ class MenuSection extends StatefulWidget {
 
   const MenuSection(this.title, this.backgroundColor, this.accentColor,
       this.menuOptions, this.navigateTo,
-          {Key key}) : super(key: key);
+          {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _SectionState();
 }
 
-//削ってはいけない
+///削ってはいけない
 /// This [State] uses the [SingleTickerProviderStateMixin] to add [vsync] to it.
 /// This allows the animation to run smoothly and avoids consuming unnecessary resources.
 class _SectionState extends State<MenuSection>
     with SingleTickerProviderStateMixin {
   /// The [AnimationController] is a Flutter Animation object that generates a new value
   /// whenever the hardware is ready to draw a new frame.
-  AnimationController _controller;
+  late AnimationController _controller;
 
   /// Since the above object interpolates only between 0 and 1, but we'd rather apply a curve to the current
   /// animation, we're providing a custom [Tween] that allows to build more advanced animations, as seen in [initState()].
@@ -44,7 +42,7 @@ class _SectionState extends State<MenuSection>
   );
 
   /// The [Animation] object itself, which is required by the [SizeTransition] widget in the [build()] method.
-  Animation<double> _sizeAnimation;
+  late Animation<double> _sizeAnimation;
 
   /// Detects which state the widget is currently in, and triggers the animation upon change.
   bool _isExpanded = false;
@@ -116,13 +114,11 @@ class _SectionState extends State<MenuSection>
         child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                color: widget.backgroundColor
-            ),
+                color: widget.backgroundColor),
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
                 child: Column(children: <Widget>[
                   Container(
-                      //color: Colors.grey,
                       height: 100.0,
                       alignment: Alignment.bottomCenter,
                       child: Row(
@@ -138,7 +134,6 @@ class _SectionState extends State<MenuSection>
                             widget.title,
                             style: TextStyle(
                                 fontSize: 20.0,
-                                //fontFamily: "RobotoMedium",
                                 color: widget.accentColor),
                           )
                         ],
@@ -170,7 +165,6 @@ class _SectionState extends State<MenuSection>
                                                         color: widget
                                                             .accentColor,
                                                         fontSize: 20.0,
-                                                        //fontFamily: "RobotoMedium"
                                                     ),
                                                   ))),
                                         ]));

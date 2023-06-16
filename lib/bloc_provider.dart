@@ -1,6 +1,4 @@
-
 import "package:flutter/widgets.dart";
-
 import 'distance/distance.dart';
 import 'distance/entry.dart';
 
@@ -10,9 +8,9 @@ class BlocProvider extends InheritedWidget {
   final Distance distance;
 
   BlocProvider(
-      {Key key,
-        Distance t,
-        @required Widget child,
+      {Key? key,
+        required Distance t,
+        required Widget child,
         TargetPlatform platform = TargetPlatform.iOS})
       : distance = t ?? Distance(platform),
         super(key: key, child: child) {
@@ -26,7 +24,6 @@ class BlocProvider extends InheritedWidget {
 
       /// Advance the distance to its starting position.
       distance.advance(0.0, false);
-
     });
   }
 
@@ -36,9 +33,9 @@ class BlocProvider extends InheritedWidget {
   /// static accessor for the [Distance].
   /// e.g. [_MainMenuWidgetState.navigateToDistance] uses this static getter to access build the [DistanceWidget].
   static Distance getDistance(BuildContext context) {
-    BlocProvider bp =
+    BlocProvider? bp =
     context.dependOnInheritedWidgetOfExactType<BlocProvider>();
-    Distance bloc = bp?.distance;
+    Distance bloc = bp!.distance;
     return bloc;
   }
 }

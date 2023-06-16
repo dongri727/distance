@@ -10,7 +10,6 @@ import 'distance.dart';
 class Ticks {
   /// The following `const` variables are used to properly align, pad and layout the ticks
   /// on the left side of the distance.
-  /// lowerCamelに直すと、別変数と被る
   static const double margin = 20.0;
   static const double width = 40.0;
   static const double labelPadLeft = 5.0;
@@ -127,13 +126,13 @@ class Ticks {
       int tt = startingTickMarkValue.round();
       tt = -tt;
       int o = tickOffset.floor();
-      TickColors colors = distance.findTickColors(offset.dy + height - o);
+      TickColors? colors = distance.findTickColors(offset.dy + height - o);
       if (tt % textTickDistance == 0) {
         /// Every `textTickDistance`, draw a wider tick with the a label laid on top.
         canvas.drawRect(
             Rect.fromLTWH(offset.dx + gutterWidth - tickSize,
                 offset.dy + height - o, tickSize, 1.0),
-            Paint()..color = colors.long);
+            Paint()..color = colors!.long);
 
         /// Drawing text to [canvas] is done by using the [ParagraphBuilder] directly.
         ui.ParagraphBuilder builder = ui.ParagraphBuilder(ui.ParagraphStyle(
@@ -149,8 +148,8 @@ class Ticks {
         } else {
           NumberFormat formatter = NumberFormat.compact();
           label = formatter.format(value);
-          int digits = formatter.minimumSignificantDigits;
-          while (usedValues.contains(label) && digits < 10) {
+          int? digits = formatter.minimumSignificantDigits;
+          while (usedValues.contains(label) && digits! < 10) {
             formatter.minimumSignificantDigits = ++digits;
             label = formatter.format(value);
           }
@@ -169,7 +168,7 @@ class Ticks {
         canvas.drawRect(
             Rect.fromLTWH(offset.dx + gutterWidth - smallTickSize,
                 offset.dy + height - o, smallTickSize, 1.0),
-            Paint()..color = colors.short);
+            Paint()..color = colors!.short);
       }
       startingTickMarkValue += tickDistance;
     }

@@ -1,25 +1,27 @@
 import 'dart:ui' as ui;
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 /// An object representing the renderable assets loaded from `distance.json`.
 ///
 /// Each [DistanceAsset] encapsulates all the relevant properties for drawing,
 /// as well as maintaining a reference to its original [DistanceEntry].
 class DistanceAsset {
-  double width;
-  double height;
+  double? width;
+  double? height;
   double opacity = 0.0;
   double scale = 0.0;
   double scaleVelocity = 0.0;
   double y = 0.0;
   double velocity = 0.0;
-  DistanceEntry entry;
+  DistanceEntry? entry;
 }
 
-/// A renderable image.
+/*/// A renderable image.
 class DistanceImage extends DistanceAsset {
   ui.Image image;
-}
+}*/
 
 /// A label for [DistanceEntry].
 enum DistanceEntryType { position, material }
@@ -30,28 +32,28 @@ enum DistanceEntryType { position, material }
 ///
 /// They are all initialized at startup time by the [BlocProvider] constructor.
 class DistanceEntry {
-  DistanceEntryType type;
+  late DistanceEntryType type;
 
   /// Used to calculate how many lines to draw for the bubble in the distance.
-  int lineCount = 1;
+  //int lineCount = 1;
 
-  String _label;
-  Color accent;
+  late String _label;
+  Color accent = Colors.blueGrey;
 
   /// Each entry constitues an element of a tree:
   /// positions are grouped into spanning positions and events are placed into the positions they belong to.
-  DistanceEntry parent;
-  List<DistanceEntry> children;
+  DistanceEntry? parent;
+  List<DistanceEntry> children = [];
 
   /// All the distance entries are also linked together to easily access the next/previous element.
   /// After a couple of seconds of inactivity on the distance, a previous/next entry button will appear
   /// to allow the user to navigate faster between adjacent element.
-  DistanceEntry next;
-  DistanceEntry previous;
+  DistanceEntry? next;
+  DistanceEntry? previous;
 
   /// All these parameters are used by the [Distance] object to properly position the current entry.
-  double start;
-  double end;
+  late double start;
+  late double end;
   double y = 0.0;
   double endY = 0.0;
   double length = 0.0;
@@ -74,13 +76,13 @@ class DistanceEntry {
   set label(String value) {
     _label = value;
     int start = 0;
-    lineCount = 1;
+    //lineCount = 1;
     while (true) {
       start = _label.indexOf("\n", start);
       if (start == -1) {
         break;
       }
-      lineCount++;
+      //lineCount++;
       start++;
     }
   }

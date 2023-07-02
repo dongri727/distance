@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       platform: Theme.of(context).platform,
       t: Distance(Theme.of(context).platform),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Distance',
         theme: ThemeData(
            useMaterial3: true),
